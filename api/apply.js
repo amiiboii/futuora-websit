@@ -1,4 +1,5 @@
 const { Resend } = require('resend');
+const { del } = require('@vercel/blob');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,18 +10,16 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { name, email, phone, role, message, cv } = req.body;
+    const { name, email, phone, role, message, blobUrl, fileName } = req.body;
 
     if (!name || !email || !role) {
       return res.status(400).json({ error: 'Name, email and role are required.' });
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-    const hasCv = !!(cv && cv.data && cv.name);
-
+    // Fetch CV from Vercel Blob and attach
     const mailPayload = {
       from: 'Futuora Careers <onboarding@resend.dev>',
       to: 'amithnalh@outlook.com',
@@ -28,16 +27,17 @@ module.exports = async function handler(req, res) {
       subject: `Application: ${role} — ${name}`,
     };
 
+    const hasCv = !!(blobUrl && fileName);
+
     if (hasCv) {
-      mailPayload.attachments = [{
-        filename: cv.name,
-        content: Buffer.from(cv.data, 'base64'),
-      }];
+      const fileRes = await fetch(blobUrl);
+      if (fileRes.ok) {
+        const fileBuffer = Buffer.from(await fileRes.arrayBuffer());
+        mailPayload.attachments = [{ filename: fileName, content: fileBuffer }];
+      }
     }
 
-    await resend.emails.send({
-      ...mailPayload,
-      html: `
+    mailPayload.html = `
 <!DOCTYPE html>
 <html>
 <body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f7f8;margin:0;padding:24px;">
@@ -70,7 +70,7 @@ module.exports = async function handler(req, res) {
         </tr>
       </table>
       ${hasCv
-        ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(cv.name)}</div>`
+        ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(fileName)}</div>`
         : `<div style="margin-top:20px;padding:12px 16px;background:#fff8f0;border-radius:8px;font-size:13px;color:#a06030;">No CV attached.</div>`
       }
     </div>
@@ -79,12 +79,18 @@ module.exports = async function handler(req, res) {
     </div>
   </div>
 </body>
-</html>`,
-    });
+</html>`;
+
+    await resend.emails.send(mailPayload);
+
+    // Delete from Blob immediately after email sent
+    if (blobUrl) {
+      await del(blobUrl).catch(err => console.error('Blob delete failed:', err));
+    }
 
     return res.status(200).json({ success: true });
   } catch (err) {
-    console.error('Apply API error:', JSON.stringify(err));
-    return res.status(500).json({ error: err.message || JSON.stringify(err) || 'Unknown error' });
+    console.error('Apply API error:', err);
+    return res.status(500).json({ error: err.message || 'Failed to send. Please try again.' });
   }
 };

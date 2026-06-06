@@ -70,7 +70,7 @@
 
   /* HERO */
   .hero { position: relative; min-height: 620px; overflow: hidden; display: flex; align-items: center; background: #f5fbfc; }
-  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat; clip-path: polygon(42% 0, 100% 0, 100% 100%, 35% 100%); }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=2000&auto=format&fit=crop&q=95') center/cover no-repeat; clip-path: polygon(42% 0, 100% 0, 100% 100%, 35% 100%); }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, #f5fbfc 38%, transparent 60%); }
   .hero-content { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 80px 28px; width: 100%; }
   .hero-text { max-width: 560px; }
@@ -197,8 +197,34 @@
   .process { background: var(--white); padding: 80px 0; }
   .process-inner { max-width: 1320px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .process-left h2 { margin-bottom: 32px; }
-  .process-photo { width: 200px; height: 220px; border-radius: 16px; overflow: hidden; }
-  .process-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .process-visual {
+    background: var(--dark-bg); border-radius: 20px; padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 0; position: relative; overflow: hidden;
+  }
+  .process-visual::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,200,212,0.12) 0%, transparent 70%);
+  }
+  .process-vis-step { display: flex; gap: 16px; align-items: flex-start; padding: 20px 0; position: relative; }
+  .process-vis-step:not(:last-child)::after {
+    content: ''; position: absolute; left: 15px; top: 52px; width: 2px;
+    height: calc(100% - 20px); background: #0a3040;
+  }
+  .process-vis-num {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--teal); color: var(--dark-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; position: relative; z-index: 1;
+  }
+  .process-vis-content h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+  .process-vis-content p  { color: #2a5060; font-size: 0.76rem; line-height: 1.5; }
+  .process-vis-footer {
+    margin-top: 8px; padding-top: 20px; border-top: 1px solid #0a3040;
+    display: flex; gap: 24px;
+  }
+  .vis-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--teal); letter-spacing: -0.04em; line-height: 1; }
+  .vis-stat-label { font-size: 0.68rem; color: #2a5060; margin-top: 2px; }
   .process-steps { display: flex; flex-direction: column; }
   .process-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--gray-mid); }
   .process-step:last-child { border-bottom: none; }
@@ -310,55 +336,95 @@
   }
   @media (max-width: 640px) {
     .nav-links { display: none; }
-    .nav-logo-text { display: none; }
+    .nav-logo-text { font-size: 1rem; }
+    .section { padding: 44px 0; }
+    .container { padding: 0 18px; }
+
+    /* hero: show image as overlay on mobile */
+    .hero { min-height: auto; }
+    .hero-bg { display: block; clip-path: none; opacity: 0.18; }
+    .hero-bg::after { background: linear-gradient(to bottom, #f5fbfc 30%, rgba(245,251,252,0.7) 100%); }
+    .hero-content { padding: 52px 18px 44px; }
+    .hero-text h1 { font-size: 2rem; }
+    .hero-sub { font-size: 0.92rem; max-width: 100%; }
+
+    /* services */
     .services-grid { grid-template-columns: 1fr; }
-    .wonder-features { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; }
-    .services-header { flex-direction: column; align-items: flex-start; }
-    .hero-bg { display: none; }
-    .hero-content { padding: 48px 20px; }
-    .hero-sub { max-width: 100%; }
-    .section { padding: 56px 0; }
-    .awards-inner { gap: 32px; }
-    .awards-circles { flex-direction: row; gap: 12px; }
-    .circle-stat { width: 150px; height: 150px; }
-    .circle-stat svg { width: 150px; height: 150px; }
-    .circle-num { font-size: 1.7rem; }
-    .awards-grid { grid-template-columns: 1fr; gap: 8px; }
-    .tech-cta { padding: 0 20px; }
-    .featured-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .service-card { padding: 24px 20px; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+    /* tools bar */
+    .featured-inner { flex-wrap: wrap; gap: 14px; padding: 0 18px; }
     .featured-divider { display: none; }
-    .featured-logos { gap: 20px; }
-    .wonder-cta-wrap h3 { font-size: 1.15rem; }
-    .process-left { text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .process-photo { width: 160px; height: 180px; }
-    .process-steps { padding: 0 4px; }
+    .featured-logos { gap: 16px; }
+    .featured-logo { font-size: 0.82rem; }
+
+    /* tech marquee */
+    .tech-cta { padding: 0 18px; }
+    .tech-header h2 { font-size: 1.4rem; }
+
+    /* capabilities */
+    .awards-inner { gap: 28px; }
+    .awards-circles { flex-direction: row; gap: 12px; justify-content: center; }
+    .circle-stat { width: 145px; height: 145px; }
+    .circle-stat svg { width: 145px; height: 145px; }
+    .circle-num { font-size: 1.6rem; }
+    .awards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .award-item { padding: 14px 12px; }
+    .awards-left { text-align: left; }
+    .awards-link { justify-content: flex-start; }
+
+    /* wonder */
+    .wonder-features { grid-template-columns: 1fr; gap: 14px; }
+    .wonder-cta-wrap h3 { font-size: 1.1rem; }
+    .wonder { padding: 44px 0; }
+
+    /* projects */
     .project-body { padding: 18px; }
+    .projects-grid { gap: 20px; }
+
+    /* founders */
     .founders-grid { max-width: 100%; }
     .founder-photo-wrap { height: 240px; }
-    .cta-contact-row { flex-direction: column; align-items: center; gap: 12px; }
-    .footer-top { gap: 28px; }
-    .phone-fab { bottom: 16px; right: 16px; width: 46px; height: 46px; }
-    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .wonder-features { gap: 16px; }
     .founder-body { padding: 20px; }
+
+    /* process */
+    .process-inner { gap: 32px; }
+    .process-visual { padding: 24px 20px; }
+    .process-vis-step { padding: 14px 0; }
+    .vis-stat-num { font-size: 1.3rem; }
+
+    /* pricing */
+    .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
+    .pricing-card.popular { transform: none; }
+    .pricing-img { height: 130px; }
+
+    /* cta */
+    .cta-contact-row { flex-direction: column; align-items: center; gap: 12px; }
+
+    /* footer */
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+    /* phone fab */
+    .phone-fab { bottom: 16px; right: 16px; width: 46px; height: 46px; }
+
     h2 { letter-spacing: -0.025em; }
-    .awards-link { justify-content: center; }
     .btn { padding: 12px 20px; font-size: 0.85rem; }
   }
   @media (max-width: 400px) {
-    .nav-inner { padding: 0 16px; gap: 12px; }
-    .nav-cta .btn { display: none; }
+    .nav-inner { padding: 0 14px; gap: 10px; }
+    .nav-cta .btn-dark { display: none; }
+    .nav-logo-text { display: none; }
+    .hero-text h1 { font-size: 1.75rem; }
     .awards-circles { gap: 8px; }
-    .circle-stat { width: 130px; height: 130px; }
-    .circle-stat svg { width: 130px; height: 130px; }
-    .circle-num { font-size: 1.4rem; }
-    .marquee-item { font-size: 1.4rem; }
-    .marquee-sep { font-size: 1.4rem; }
-    .container { padding: 0 16px; }
-    .service-card { padding: 24px 18px; }
-    .founder-photo-wrap { height: 200px; }
-    h1 { font-size: 1.9rem; }
+    .circle-stat { width: 128px; height: 128px; }
+    .circle-stat svg { width: 128px; height: 128px; }
+    .circle-num { font-size: 1.35rem; }
+    .marquee-item { font-size: 1.35rem; padding: 0 20px; }
+    .marquee-sep { font-size: 1.35rem; }
+    .container { padding: 0 14px; }
+    .awards-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -791,8 +857,42 @@
   <div class="process-inner">
     <div class="process-left">
       <h2>Three steps.<br>From your idea<br>to a real product.</h2>
-      <div class="process-photo" style="margin-top:32px;">
-        <img src="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?w=400&auto=format&fit=crop&q=80" alt="Engineering workspace">
+      <div class="process-visual" style="margin-top:32px;">
+        <div class="process-vis-step">
+          <div class="process-vis-num">1</div>
+          <div class="process-vis-content">
+            <h4>You share the idea</h4>
+            <p>Requirements, constraints, budget, timeline</p>
+          </div>
+        </div>
+        <div class="process-vis-step">
+          <div class="process-vis-num">2</div>
+          <div class="process-vis-content">
+            <h4>We design and prototype</h4>
+            <p>CAD, FEA, validation iterations</p>
+          </div>
+        </div>
+        <div class="process-vis-step">
+          <div class="process-vis-num">3</div>
+          <div class="process-vis-content">
+            <h4>We build and deliver</h4>
+            <p>Fabrication, testing, real-world ready</p>
+          </div>
+        </div>
+        <div class="process-vis-footer">
+          <div>
+            <div class="vis-stat-num">12+</div>
+            <div class="vis-stat-label">Projects<br>delivered</div>
+          </div>
+          <div>
+            <div class="vis-stat-num">48h</div>
+            <div class="vis-stat-label">To a plan<br>for your idea</div>
+          </div>
+          <div>
+            <div class="vis-stat-num">2</div>
+            <div class="vis-stat-label">Expert<br>founders</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="process-steps">

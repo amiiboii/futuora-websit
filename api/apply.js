@@ -19,6 +19,8 @@ module.exports = async function handler(req, res) {
 
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
+    const hasCv = !!(cv && cv.data && cv.name);
+
     const mailPayload = {
       from: 'Futuora Careers <onboarding@resend.dev>',
       to: 'amithnalh@outlook.com',
@@ -26,7 +28,7 @@ module.exports = async function handler(req, res) {
       subject: `Application: ${role} — ${name}`,
     };
 
-    if (cv && cv.data && cv.name) {
+    if (hasCv) {
       mailPayload.attachments = [{
         filename: cv.name,
         content: Buffer.from(cv.data, 'base64'),
@@ -67,7 +69,7 @@ module.exports = async function handler(req, res) {
           <td style="padding:10px 0;color:#063347;line-height:1.6;">${safeText(message) || '—'}</td>
         </tr>
       </table>
-      ${attachments.length > 0
+      ${hasCv
         ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(cv.name)}</div>`
         : `<div style="margin-top:20px;padding:12px 16px;background:#fff8f0;border-radius:8px;font-size:13px;color:#a06030;">No CV attached.</div>`
       }

@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,13 +15,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Name, email and role are required.' });
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
-      },
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
@@ -30,14 +24,13 @@ module.exports = async function handler(req, res) {
       attachments.push({
         filename: cv.name,
         content: Buffer.from(cv.data, 'base64'),
-        contentType: cv.type || 'application/octet-stream',
       });
     }
 
-    await transporter.sendMail({
-      from: `"Futuora Careers" <${process.env.GMAIL_USER}>`,
+    await resend.emails.send({
+      from: 'Futuora Careers <onboarding@resend.dev>',
       to: ['amithnalh@outlook.com', 'janitha@futuora.com'],
-      replyTo: email,
+      reply_to: email,
       subject: `Application: ${role} — ${name}`,
       attachments,
       html: `
@@ -88,6 +81,6 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Apply API error:', err);
-    return res.status(500).json({ error: 'Failed to send. Please try again.' });
+    return res.status(500).json({ error: err.message || 'Failed to send. Please try again.' });
   }
 };

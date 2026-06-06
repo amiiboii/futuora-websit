@@ -312,6 +312,14 @@
   .pricing-header h2 { margin-bottom: 12px; }
   .pricing-header p { color: var(--gray-text); font-size: 0.95rem; }
   .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+  .pricing-card.custom { grid-column: 1 / -1; flex-direction: row; align-items: center; border: 1.5px dashed rgba(0,200,212,0.35); background: transparent; }
+  .pricing-card.custom:hover { background: rgba(0,200,212,0.03); border-color: var(--teal); transform: none; box-shadow: 0 4px 24px rgba(0,200,212,0.08); }
+  .pricing-card.custom .pricing-head { flex: 1; border-radius: 0; background: transparent; padding: 28px 32px; }
+  .pricing-card.custom .pricing-plan-name { color: var(--black); font-size: 1.35rem; }
+  .pricing-card.custom .pricing-amount { color: var(--teal); font-size: 2rem; }
+  .pricing-card.custom .pricing-from, .pricing-card.custom .pricing-period, .pricing-card.custom .pricing-duration-tag, .pricing-card.custom .pricing-plan-tag { color: var(--gray-text); }
+  .pricing-card.custom .pricing-body { flex: 2; padding: 28px 32px 28px 0; margin: 0; }
+  .pricing-card.custom .pricing-cta { max-width: 200px; }
   .pricing-card {
     background: var(--white); border: 1px solid var(--gray-mid); border-radius: 18px;
     overflow: hidden; display: flex; flex-direction: column;
@@ -343,6 +351,9 @@
   @media (max-width: 900px) {
     .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
     .pricing-card.popular { transform: none; }
+    .pricing-card.custom { flex-direction: column; }
+    .pricing-card.custom .pricing-head { padding: 24px 20px; }
+    .pricing-card.custom .pricing-body { padding: 0 20px 24px; }
   }
 
   /* CTA BAND */
@@ -447,6 +458,8 @@
   [data-theme="dark"] .pricing-header h2 { color: #c8e4ec; }
   [data-theme="dark"] .pricing-card { background: #031e2c; border-color: #0a2a35; }
   [data-theme="dark"] .pricing-card.popular { border-color: var(--teal); }
+  [data-theme="dark"] .pricing-card.custom { background: transparent; border-color: rgba(0,200,212,0.2); }
+  [data-theme="dark"] .pricing-card.custom .pricing-plan-name { color: #c8e4ec; }
   [data-theme="dark"] .pricing-feat { color: #c8e4ec; }
   [data-theme="dark"] .pricing-cta { border-color: #0a2a35; color: #c8e4ec; }
   [data-theme="dark"] .pricing-cta:hover { background: #0a2a35; }
@@ -1054,40 +1067,63 @@
 
       <div class="pricing-card">
         <div class="pricing-head">
-          <p class="pricing-plan-tag">For startups and founders</p>
-          <p class="pricing-plan-name">Prototype Sprint</p>
+          <p class="pricing-plan-tag">Websites, apps and software</p>
+          <p class="pricing-plan-name">Web and Software</p>
           <p class="pricing-from">starting from</p>
           <div class="pricing-price-row">
-            <span class="pricing-amount">$2,499</span>
+            <span class="pricing-amount">$50</span>
           </div>
-          <span class="pricing-duration-tag">6 week delivery</span>
+          <span class="pricing-duration-tag">scope and timeline varies</span>
         </div>
         <div class="pricing-body">
-          <p class="pricing-desc">Get to a validated working prototype fast. Ideal for proving your concept before committing to full production.</p>
+          <p class="pricing-desc">Landing pages, business websites, web apps and software solutions. Priced based on what you need, starting from $50 for simple sites.</p>
           <div class="pricing-features">
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Concept design and CAD modelling</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Fabricated or 3D printed prototype</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Basic functional testing</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Design documentation package</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Two revision rounds included</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Landing pages from $50</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Business websites from $150</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Web apps and platforms from $500</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>React, WordPress, full stack</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>AI automation from $200</div>
           </div>
-          <a href="#contact" class="pricing-cta">Get Started</a>
+          <a href="#contact" class="pricing-cta">Get a Quote</a>
         </div>
       </div>
 
       <div class="pricing-card popular">
         <div class="pricing-head">
           <span class="pricing-badge">Most popular</span>
-          <p class="pricing-plan-tag">For founders ready to build</p>
+          <p class="pricing-plan-tag">Hardware and product development</p>
+          <p class="pricing-plan-name">Prototype Sprint</p>
+          <p class="pricing-from">starting from</p>
+          <div class="pricing-price-row">
+            <span class="pricing-amount">$299</span>
+          </div>
+          <span class="pricing-duration-tag">4 to 6 week delivery</span>
+        </div>
+        <div class="pricing-body">
+          <p class="pricing-desc">Get to a working prototype fast. Ideal for validating your concept before committing to full production investment.</p>
+          <div class="pricing-features">
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Concept design and CAD modelling</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Fabricated or 3D printed prototype</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Basic functional testing</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Design documentation</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Two revision rounds</div>
+          </div>
+          <a href="#contact" class="pricing-cta">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-head">
+          <p class="pricing-plan-tag">End-to-end product engineering</p>
           <p class="pricing-plan-name">Full Product Build</p>
           <p class="pricing-from">starting from</p>
           <div class="pricing-price-row">
-            <span class="pricing-amount">$4,999</span>
+            <span class="pricing-amount">$999</span>
           </div>
           <span class="pricing-duration-tag">8 to 10 week delivery</span>
         </div>
         <div class="pricing-body">
-          <p class="pricing-desc">End-to-end engineering from concept to a production-ready product. Hardware, firmware, fabrication and testing all in-house.</p>
+          <p class="pricing-desc">Concept to production-ready product. Mechanical, electronics, firmware, fabrication and testing — all in-house.</p>
           <div class="pricing-features">
             <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Full mechanical and electronics design</div>
             <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Embedded firmware development</div>
@@ -1099,27 +1135,24 @@
         </div>
       </div>
 
-      <div class="pricing-card">
+      <div class="pricing-card custom">
         <div class="pricing-head">
-          <p class="pricing-plan-tag">For teams needing ongoing support</p>
-          <p class="pricing-plan-name">Engineering Engagement</p>
-          <p class="pricing-from">starting from</p>
+          <p class="pricing-plan-tag">Automation, robotics and complex systems</p>
+          <p class="pricing-plan-name">Custom Project</p>
+          <p class="pricing-from">pricing</p>
           <div class="pricing-price-row">
-            <span class="pricing-amount">$599</span>
-            <span class="pricing-period">/mo</span>
+            <span class="pricing-amount">Depends on scope</span>
           </div>
-          <span class="pricing-duration-tag">cancel anytime</span>
+          <span class="pricing-duration-tag">timeline based on requirements</span>
         </div>
         <div class="pricing-body">
-          <p class="pricing-desc">Dedicated engineering hours every month. R&amp;D, product iterations, and ongoing technical support without committing to a fixed project scope.</p>
+          <p class="pricing-desc">For industrial automation, robotics systems, large-scale hardware, 3D scanning, UAV development or anything that does not fit a standard package. Tell us what you need and we will give you a clear quote within 48 hours.</p>
           <div class="pricing-features">
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Dedicated monthly engineering hours</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>R&amp;D and product iteration support</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Flexible scope each month</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Priority response and access</div>
-            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Monthly progress reporting</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Industrial automation and robotics</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>3D scanning and reverse engineering</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span>Multi-discipline engineering projects</div>
           </div>
-          <a href="#contact" class="pricing-cta">Get Started</a>
+          <a href="#contact" class="pricing-cta">Talk to Us</a>
         </div>
       </div>
 

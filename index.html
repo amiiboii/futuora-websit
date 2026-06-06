@@ -43,10 +43,35 @@
   h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; }
   h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
 
+  /* CONTACT POPUP */
+  .contact-popup {
+    position: fixed; z-index: 9999;
+    opacity: 0; transform: translateY(8px) scale(0.96); pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .contact-popup.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+  .contact-popup-inner {
+    background: var(--white); border: 1px solid var(--gray-mid);
+    border-radius: 16px; padding: 14px; box-shadow: 0 12px 48px rgba(0,100,120,0.18);
+    display: flex; flex-direction: column; gap: 8px; min-width: 210px;
+  }
+  .contact-popup-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #99bfc8; margin-bottom: 2px; padding: 0 4px; }
+  .contact-popup-btn {
+    display: flex; align-items: center; gap: 12px; padding: 11px 14px;
+    border-radius: 10px; text-decoration: none; transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+  .contact-popup-btn:hover { background: var(--gray-light); border-color: var(--gray-mid); }
+  .contact-popup-btn-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-popup-call .contact-popup-btn-icon { background: #e8f8f9; color: var(--teal); }
+  .contact-popup-wa .contact-popup-btn-icon { background: #e8f8f0; color: #25D366; }
+  .contact-popup-btn-text strong { display: block; font-size: 0.85rem; font-weight: 700; color: var(--black); }
+  .contact-popup-btn-text span { display: block; font-size: 0.72rem; color: var(--gray-text); margin-top: 1px; }
+
   /* PHONE FAB */
   .phone-fab {
     position: fixed; bottom: 28px; right: 28px; width: 52px; height: 52px;
-    background: var(--teal); color: var(--dark-bg); border-radius: 50%;
+    background: var(--teal); color: var(--dark-bg); border-radius: 50%; cursor: pointer; border: none;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 20px rgba(0,200,212,0.4); z-index: 250;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -70,13 +95,13 @@
 
   /* HERO */
   .hero { position: relative; min-height: 620px; overflow: hidden; display: flex; align-items: center; background: #f5fbfc; }
-  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=2000&auto=format&fit=crop&q=95') center/cover no-repeat; clip-path: polygon(42% 0, 100% 0, 100% 100%, 35% 100%); }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=2000&auto=format&fit=crop&q=95') center/cover no-repeat; clip-path: polygon(42% 0, 100% 0, 100% 100%, 35% 100%); }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, #f5fbfc 38%, transparent 60%); }
   .hero-content { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 80px 28px; width: 100%; }
   .hero-text { max-width: 560px; }
   .hero-text h1 { margin-bottom: 20px; color: var(--black); }
   .hero-rotating { color: var(--teal); display: block; }
-  .hero-sub { font-size: 1rem; color: #4a7080; margin-bottom: 32px; max-width: 420px; line-height: 1.65; }
+  .hero-sub { font-size: 1.2rem; color: #4a7080; margin-bottom: 32px; max-width: 480px; line-height: 1.65; }
 
   /* SERVICES */
   .services { background: var(--gray-light); }
@@ -168,71 +193,107 @@
   .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .project-tag { padding: 4px 11px; font-size: 0.68rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 20px; color: var(--black); }
 
-  /* FOUNDERS */
-  .founders { background: var(--gray-light); padding: 80px 0; }
-  .founders-header { text-align: center; max-width: 580px; margin: 0 auto 56px; }
-  .founders-header h2 { margin-bottom: 12px; }
-  .founders-header p { color: var(--gray-text); font-size: 0.95rem; }
-  .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1000px; margin: 0 auto; }
-  .founder-card { border: 1px solid var(--gray-mid); border-radius: 16px; overflow: hidden; transition: box-shadow 0.3s, border-color 0.3s; background: var(--white); }
-  .founder-card:hover { box-shadow: 0 12px 48px rgba(0,100,120,0.1); border-color: rgba(0,200,212,0.35); }
-  .founder-photo-wrap { height: 300px; overflow: hidden; background: #021a27; position: relative; }
-  .founder-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.5s; }
-  .founder-card:hover .founder-photo-wrap img { transform: scale(1.03); }
-  .founder-photo-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to top, rgba(2,26,39,0.85), transparent); }
-  .founder-body { padding: 28px; }
-  .founder-body h3 { font-size: 1.15rem; color: var(--black); margin-bottom: 4px; }
-  .founder-title { font-size: 0.78rem; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
-  .founder-bio { font-size: 0.86rem; color: var(--gray-text); line-height: 1.7; margin-bottom: 18px; }
-  .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-  .founder-tag { padding: 4px 12px; font-size: 0.7rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 20px; color: var(--black); }
-  .founder-links { display: flex; gap: 10px; }
-  .founder-link { padding: 7px 16px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--gray-mid); border-radius: 6px; color: var(--black); display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
-  .founder-link:hover { border-color: var(--teal); color: var(--teal); }
-  .founder-achievements { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gray-mid); display: flex; flex-direction: column; gap: 6px; }
-  .founder-achievement { display: flex; gap: 8px; align-items: flex-start; font-size: 0.78rem; color: var(--gray-text); line-height: 1.4; }
-  .achievement-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 5px; }
+
+  /* PROJECT MODALS */
+  .project-card { cursor: pointer; }
+  .proj-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(3,30,44,0.72);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .proj-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .proj-modal {
+    background: var(--white); border-radius: 20px;
+    width: 100%; max-width: 780px; max-height: 90vh; overflow-y: auto;
+    transform: translateY(36px) scale(0.96);
+    transition: transform 0.38s cubic-bezier(0.34,1.4,0.64,1);
+    position: relative; scrollbar-width: thin;
+  }
+  .proj-modal-overlay.open .proj-modal { transform: translateY(0) scale(1); }
+  .proj-modal-img { aspect-ratio: 16/9; overflow: hidden; background: var(--dark-bg); border-radius: 20px 20px 0 0; }
+  .proj-modal-img img { width: 100%; height: 100%; object-fit: cover; }
+  .proj-modal-body { padding: 32px 32px 28px; }
+  .proj-modal-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .proj-modal-badges { display: flex; gap: 7px; flex-wrap: wrap; }
+  .proj-modal-close {
+    flex-shrink: 0; width: 36px; height: 36px; border: none; background: var(--gray-light);
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--black); line-height: 1;
+  }
+  .proj-modal-close:hover { background: var(--gray-mid); }
+  .proj-modal-logo-hero { background: var(--dark-bg); border-radius: 20px 20px 0 0; padding: 40px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; position: relative; overflow: hidden; }
+  .proj-modal-logo-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,212,0.1) 0%, transparent 70%); pointer-events: none; }
+  .proj-modal-logo-hero img { height: 90px; width: auto; position: relative; z-index: 1; }
+  .proj-modal-logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .proj-modal-logo-row img { height: 44px; width: auto; }
+  .proj-modal-title { font-size: 1.55rem; font-weight: 800; color: var(--black); letter-spacing: -0.035em; line-height: 1.15; margin-bottom: 10px; }
+  .proj-modal-tagline { font-size: 0.84rem; color: var(--teal); font-weight: 600; margin-bottom: 14px; }
+  .proj-modal-desc { font-size: 0.88rem; color: var(--gray-text); line-height: 1.72; margin-bottom: 22px; }
+  .preorder-strip { display: flex; align-items: center; gap: 10px; background: rgba(0,200,212,0.07); border: 1px solid rgba(0,200,212,0.22); border-radius: 10px; padding: 12px 16px; margin-bottom: 22px; }
+  .preorder-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .preorder-strip p { font-size: 0.82rem; color: var(--teal); font-weight: 700; }
+  .preorder-strip span { font-weight: 400; color: var(--gray-text); }
+  .specs-heading { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 10px; }
+  .specs-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 0.83rem; }
+  .specs-table tr { border-bottom: 1px solid var(--gray-mid); }
+  .specs-table tr:last-child { border-bottom: none; }
+  .specs-table td { padding: 8px 10px; vertical-align: top; line-height: 1.45; }
+  .specs-table td:first-child { color: var(--gray-text); font-weight: 600; width: 46%; padding-left: 0; }
+  .specs-table td:last-child { color: var(--black); font-weight: 500; }
+  .proj-modal-tags { display: flex; flex-wrap: wrap; gap: 7px; padding-top: 16px; border-top: 1px solid var(--gray-mid); }
+
+  [data-theme="dark"] .proj-modal { background: #031e2c; }
+  [data-theme="dark"] .proj-modal-close { background: #0a2a35; color: #c8e4ec; }
+  [data-theme="dark"] .proj-modal-close:hover { background: #0f3040; }
+  [data-theme="dark"] .proj-modal-title { color: #c8e4ec; }
+  [data-theme="dark"] .specs-table tr { border-bottom-color: #0a2a35; }
+  [data-theme="dark"] .specs-table td:last-child { color: #c8e4ec; }
+  [data-theme="dark"] .proj-modal-tags { border-top-color: #0a2a35; }
+  [data-theme="dark"] .preorder-strip { background: rgba(0,200,212,0.05); border-color: rgba(0,200,212,0.15); }
+
+  @media (max-width: 640px) {
+    .proj-modal-body { padding: 20px 18px 18px; }
+    .proj-modal-title { font-size: 1.25rem; }
+    .specs-table { font-size: 0.76rem; }
+    .specs-table td { padding: 6px 8px 6px 0; }
+    .specs-table td:first-child { width: 50%; }
+  }
 
   /* PROCESS */
   .process { background: var(--white); padding: 80px 0; }
-  .process-inner { max-width: 1320px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .process-left h2 { margin-bottom: 32px; }
-  .process-visual {
-    background: var(--dark-bg); border-radius: 20px; padding: 36px 32px;
-    display: flex; flex-direction: column; gap: 0; position: relative; overflow: hidden;
+  .process-header { text-align: center; max-width: 600px; margin: 0 auto 52px; }
+  .process-header h2 { margin-bottom: 12px; }
+  .process-header p { color: var(--gray-text); font-size: 0.95rem; }
+  .process-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    background: var(--gray-mid); border-radius: 16px; overflow: hidden;
   }
-  .process-visual::before {
-    content: ''; position: absolute; top: -60px; right: -60px;
-    width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,200,212,0.12) 0%, transparent 70%);
+  .process-card {
+    background: var(--white); padding: 36px 28px;
+    position: relative; transition: background 0.2s;
   }
-  .process-vis-step { display: flex; gap: 16px; align-items: flex-start; padding: 20px 0; position: relative; }
-  .process-vis-step:not(:last-child)::after {
-    content: ''; position: absolute; left: 15px; top: 52px; width: 2px;
-    height: calc(100% - 20px); background: #0a3040;
+  .process-card:hover { background: #fafefe; }
+  .process-card-num {
+    font-size: 3.5rem; font-weight: 800; color: rgba(0,200,212,0.12);
+    letter-spacing: -0.05em; line-height: 1; margin-bottom: 16px;
+    font-variant-numeric: tabular-nums;
   }
-  .process-vis-num {
-    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
-    background: var(--teal); color: var(--dark-bg);
+  .process-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--black); }
+  .process-card p { font-size: 0.87rem; color: var(--gray-text); line-height: 1.65; }
+  .process-card::after {
+    content: '→'; position: absolute; top: 50%; right: -12px;
+    transform: translateY(-50%); z-index: 2;
+    width: 24px; height: 24px; background: var(--teal); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem; font-weight: 800; position: relative; z-index: 1;
+    font-size: 0.7rem; color: var(--dark-bg); font-weight: 800;
+    box-shadow: 0 0 0 3px var(--white);
   }
-  .process-vis-content h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
-  .process-vis-content p  { color: #2a5060; font-size: 0.76rem; line-height: 1.5; }
-  .process-vis-footer {
-    margin-top: 8px; padding-top: 20px; border-top: 1px solid #0a3040;
-    display: flex; gap: 24px;
-  }
-  .vis-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--teal); letter-spacing: -0.04em; line-height: 1; }
-  .vis-stat-label { font-size: 0.68rem; color: #2a5060; margin-top: 2px; }
-  .process-steps { display: flex; flex-direction: column; }
-  .process-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--gray-mid); }
-  .process-step:last-child { border-bottom: none; }
-  .step-num-badge { flex-shrink: 0; width: 32px; height: 32px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--dark-bg); margin-top: 2px; }
-  .step-eyebrow { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #99bfc8; margin-bottom: 6px; }
-  .process-step h3 { font-size: 1rem; margin-bottom: 6px; }
-  .process-step p  { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
-  .process-cta { margin-top: 28px; }
+  .process-card:last-child::after { display: none; }
+  .process-cta { text-align: center; margin-top: 40px; }
 
   /* PRICING */
   .pricing { background: var(--gray-light); padding: 80px 0; }
@@ -320,6 +381,89 @@
   .social-links a { width: 34px; height: 34px; border-radius: 50%; background: #0a2030; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #2a5060; font-weight: 700; transition: all 0.15s; }
   .social-links a:hover { background: #0f3040; color: var(--white); }
 
+  /* DARK MODE TOGGLE */
+  .theme-toggle {
+    width: 38px; height: 38px; background: var(--gray-light); border: none;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s, color 0.2s; color: var(--black);
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: var(--gray-mid); }
+  .theme-toggle .icon-moon { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: block; color: var(--teal); }
+  [data-theme="dark"] .theme-toggle { background: #0a2a35; }
+
+  /* DARK MODE OVERRIDES */
+  [data-theme="dark"] body { background: #031e2c; color: #c8e4ec; }
+  [data-theme="dark"] .nav { background: rgba(2,12,20,0.98); border-bottom-color: rgba(255,255,255,0.04); }
+  [data-theme="dark"] .nav-logo-text { color: #c8e4ec; }
+  [data-theme="dark"] .nav-links a { color: #c8e4ec; }
+  [data-theme="dark"] .nav-links a:hover { background: #0a2a35; }
+  [data-theme="dark"] .nav-phone { background: #0a2a35; color: #c8e4ec; }
+  [data-theme="dark"] .nav-phone:hover { background: #0f3040; }
+  [data-theme="dark"] .contact-popup-inner { background: #031e2c; border-color: #0a2a35; }
+  [data-theme="dark"] .contact-popup-btn:hover { background: #0a2a35; border-color: #0f3040; }
+  [data-theme="dark"] .contact-popup-btn-text strong { color: #c8e4ec; }
+  [data-theme="dark"] .contact-popup-call .contact-popup-btn-icon { background: #042230; }
+  [data-theme="dark"] .contact-popup-wa .contact-popup-btn-icon { background: #032210; }
+  [data-theme="dark"] .btn-dark { background: #0a2a35; }
+  [data-theme="dark"] .btn-dark:hover { background: #0f3a4a; }
+  [data-theme="dark"] .btn-outline { color: #c8e4ec; border-color: #0a3040; }
+  [data-theme="dark"] .btn-outline:hover { background: #0a3040; color: #c8e4ec; }
+
+  [data-theme="dark"] .hero { background: #031e2c; }
+  [data-theme="dark"] .hero-text h1 { color: #c8e4ec; }
+  [data-theme="dark"] .hero-sub { color: #4a7080; }
+  [data-theme="dark"] .hero-bg::after { background: linear-gradient(to right, #031e2c 38%, transparent 62%); }
+
+  [data-theme="dark"] .services { background: #041828; }
+  [data-theme="dark"] .services-grid { background: #0a2a35; }
+  [data-theme="dark"] .service-card { background: #031e2c; }
+  [data-theme="dark"] .service-card:hover { background: #04202e; }
+  [data-theme="dark"] .services-header h2 { color: #c8e4ec; }
+
+  [data-theme="dark"] .featured { background: #020f17; }
+
+  [data-theme="dark"] .tech { background: #031e2c; }
+  [data-theme="dark"] .tech-header h2 { color: #c8e4ec; }
+  [data-theme="dark"] .tech-header p { color: #4a7080; }
+  [data-theme="dark"] .marquee-item { color: #1a4050; }
+
+  [data-theme="dark"] .wonder { background: #041828; }
+  [data-theme="dark"] .wonder-feat h3 { color: #c8e4ec; }
+  [data-theme="dark"] .wonder-cta-wrap h3 { color: #c8e4ec; }
+  [data-theme="dark"] .wonder-top h2 { color: #c8e4ec; }
+
+  [data-theme="dark"] .projects-section { background: #031e2c; border-top-color: #0a2a35; }
+  [data-theme="dark"] .projects-header h2 { color: #c8e4ec; }
+  [data-theme="dark"] .project-card { background: #041828; border-color: #0a2a35; }
+  [data-theme="dark"] .project-body h3 { color: #c8e4ec; }
+  [data-theme="dark"] .spec-item { background: #031e2c; }
+  [data-theme="dark"] .spec-val { color: #c8e4ec; }
+  [data-theme="dark"] .project-tag { background: #031e2c; border-color: #0a2a35; color: #c8e4ec; }
+
+
+  [data-theme="dark"] .process { background: #031e2c; }
+  [data-theme="dark"] .process-cards { background: #0a2a35; }
+  [data-theme="dark"] .process-card { background: #031e2c; }
+  [data-theme="dark"] .process-card:hover { background: #042230; }
+  [data-theme="dark"] .process-card h3 { color: #c8e4ec; }
+  [data-theme="dark"] .process-header h2 { color: #c8e4ec; }
+  [data-theme="dark"] .process-header p { color: #2a5060; }
+  [data-theme="dark"] .process-card p { color: #2a5060; }
+
+  [data-theme="dark"] .pricing { background: #041828; }
+  [data-theme="dark"] .pricing-header h2 { color: #c8e4ec; }
+  [data-theme="dark"] .pricing-card { background: #031e2c; border-color: #0a2a35; }
+  [data-theme="dark"] .pricing-card.popular { border-color: var(--teal); }
+  [data-theme="dark"] .pricing-cta { background: #0a2a35; color: #c8e4ec; }
+  [data-theme="dark"] .pricing-cta:hover { background: #0f3040; }
+  [data-theme="dark"] .pricing-card.popular .pricing-cta { background: var(--teal); color: #031e2c; }
+  [data-theme="dark"] .pricing-body h3 { color: #c8e4ec; }
+
+  [data-theme="dark"] .footer-col h4 { color: #0f3040; }
+
   /* RESPONSIVE */
   @media (max-width: 1024px) {
     .awards-inner { grid-template-columns: 1fr 1fr; }
@@ -328,10 +472,9 @@
     .services-grid { grid-template-columns: 1fr 1fr; }
     .awards-inner { grid-template-columns: 1fr; text-align: center; }
     .awards-circles { flex-direction: row; justify-content: center; }
-    .process-inner { grid-template-columns: 1fr; gap: 40px; }
+    .process-cards { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
     .hero-bg { clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%); }
-    .founders-grid { grid-template-columns: 1fr; max-width: 520px; }
     .projects-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
@@ -346,7 +489,7 @@
     .hero-bg::after { background: linear-gradient(to bottom, #f5fbfc 30%, rgba(245,251,252,0.7) 100%); }
     .hero-content { padding: 52px 18px 44px; }
     .hero-text h1 { font-size: 2rem; }
-    .hero-sub { font-size: 0.92rem; max-width: 100%; }
+    .hero-sub { font-size: 1rem; max-width: 100%; }
 
     /* services */
     .services-grid { grid-template-columns: 1fr; }
@@ -383,16 +526,11 @@
     .project-body { padding: 18px; }
     .projects-grid { gap: 20px; }
 
-    /* founders */
-    .founders-grid { max-width: 100%; }
-    .founder-photo-wrap { height: 240px; }
-    .founder-body { padding: 20px; }
 
     /* process */
-    .process-inner { gap: 32px; }
-    .process-visual { padding: 24px 20px; }
-    .process-vis-step { padding: 14px 0; }
-    .vis-stat-num { font-size: 1.3rem; }
+    .process-card { padding: 28px 20px; }
+    .process-card-num { font-size: 2.8rem; }
+    .process-card::after { display: none; }
 
     /* pricing */
     .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
@@ -403,7 +541,8 @@
     .cta-contact-row { flex-direction: column; align-items: center; gap: 12px; }
 
     /* footer */
-    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-top { grid-template-columns: 1fr; gap: 24px; }
+    .footer-col-hide { display: none; }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
 
     /* phone fab */
@@ -430,10 +569,115 @@
 </head>
 <body>
 
+<!-- PROJECT MODAL: VENDING -->
+<div class="proj-modal-overlay" id="modal-vending">
+  <div class="proj-modal">
+    <div class="proj-modal-img"><img src="pics/Vending.png" alt="Futura Food Dispensary Machine"></div>
+    <div class="proj-modal-body">
+      <div class="proj-modal-toprow">
+        <div class="proj-modal-badges">
+          <span class="project-category-bar" style="position:static;font-size:0.65rem;">Product Design and Fabrication</span>
+          <span class="project-status status-dev" style="position:static;font-size:0.65rem;">In Development</span>
+        </div>
+        <button class="proj-modal-close" onclick="closeProjModal('vending')">&#x2715;</button>
+      </div>
+      <h2 class="proj-modal-title">Futura Food Dispensary Machine</h2>
+      <p class="proj-modal-tagline">A custom-built commercial smart vending machine, designed and fabricated in-house</p>
+      <p class="proj-modal-desc">A large-format smart food and drink vending machine built entirely under Futuora Engineering. Custom galvanized steel cabinet with 7 dispensing trays, smart IoT controller, PAX A50 payment terminal, 10.1 inch touchscreen interface, and a full refrigeration system engineered for Sri Lanka's ambient conditions. Every component was designed, fabricated and integrated in-house.</p>
+      <div class="proj-modal-tags">
+        <span class="project-tag">SolidWorks CAD</span>
+        <span class="project-tag">Sheet Metal Fabrication</span>
+        <span class="project-tag">Embedded Systems</span>
+        <span class="project-tag">Electronics Design</span>
+        <span class="project-tag">Refrigeration Engineering</span>
+        <span class="project-tag">IoT Controller</span>
+        <span class="project-tag">Payment Integration</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MODAL: SPLIT WATER -->
+<div class="proj-modal-overlay" id="modal-splitwater">
+  <div class="proj-modal">
+    <div class="proj-modal-logo-hero">
+      <button class="proj-modal-close" onclick="closeProjModal('splitwater')" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.1);color:#c8e4ec;">&#x2715;</button>
+      <img src="pics/Split water logo.png" alt="Split Water">
+      <div class="preorder-strip" style="margin-bottom:0;border-color:rgba(0,200,212,0.3);">
+        <span class="preorder-dot"></span>
+        <p>Pre-orders now open. <span>Contact us to reserve a unit or discuss your requirements.</span></p>
+      </div>
+    </div>
+    <div class="proj-modal-img" style="border-radius:0;aspect-ratio:16/6;">
+      <img src="pics/RO.png" alt="Split Water RO System">
+    </div>
+    <div class="proj-modal-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+        <span class="project-category-bar" style="position:static;font-size:0.65rem;">Mechanical Engineering and Electronics</span>
+        <span class="project-status status-live" style="position:static;font-size:0.65rem;">Pre-order Open</span>
+      </div>
+      <p class="specs-heading">Technical Specifications</p>
+      <table class="specs-table">
+        <tr><td>Freshwater Output</td><td>60 L/h</td></tr>
+        <tr><td>Daily Production</td><td>~1,440 L/day</td></tr>
+        <tr><td>Feed Water Source</td><td>Seawater</td></tr>
+        <tr><td>Recovery Rate</td><td>20%</td></tr>
+        <tr><td>Feed Water Required</td><td>300 L/h</td></tr>
+        <tr><td>Filtration</td><td>5 micron pre-filter</td></tr>
+        <tr><td>Wetted Materials</td><td>SS316 stainless steel throughout</td></tr>
+        <tr><td>Corrosion Resistance</td><td>Full seawater grade</td></tr>
+        <tr><td>Operating Pressure</td><td>~60 bar</td></tr>
+        <tr><td>Overpressure Protection</td><td>Automatic relief valve (hardware level)</td></tr>
+        <tr><td>Membrane Protection</td><td>Automated freshwater flush on every shutdown</td></tr>
+        <tr><td>Control System</td><td>Embedded MCU with display and operator interface</td></tr>
+        <tr><td>Monitoring</td><td>Real-time pressure monitoring across system</td></tr>
+        <tr><td>Operation</td><td>Automated, minimal operator input required</td></tr>
+        <tr><td>Commissioning Status</td><td>Hydraulic system verified, stable output confirmed</td></tr>
+        <tr><td>Target Application</td><td>Coastal and off-grid freshwater production</td></tr>
+        <tr><td>Manufacturer</td><td>Futuora Engineering (Pvt) Ltd, Sri Lanka</td></tr>
+      </table>
+      <div class="proj-modal-tags">
+        <span class="project-tag">Hydraulic Systems</span>
+        <span class="project-tag">Embedded Systems</span>
+        <span class="project-tag">Water Treatment</span>
+        <span class="project-tag">PCB Design</span>
+        <span class="project-tag">SS316 Fabrication</span>
+        <span class="project-tag">Pressure Control</span>
+        <span class="project-tag">Desalination</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT POPUP -->
+<div class="contact-popup" id="contactPopup">
+  <div class="contact-popup-inner">
+    <p class="contact-popup-label">Get in touch via</p>
+    <a href="tel:+94711068057" class="contact-popup-btn contact-popup-call">
+      <div class="contact-popup-btn-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div class="contact-popup-btn-text">
+        <strong>Phone Call</strong>
+        <span>+94 71 106 8057</span>
+      </div>
+    </a>
+    <a href="https://wa.me/94711068057" target="_blank" class="contact-popup-btn contact-popup-wa">
+      <div class="contact-popup-btn-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </div>
+      <div class="contact-popup-btn-text">
+        <strong>WhatsApp</strong>
+        <span>Send a message</span>
+      </div>
+    </a>
+  </div>
+</div>
+
 <!-- PHONE FAB -->
-<a href="tel:+94711068057" class="phone-fab" title="Call Futuora">
+<button class="phone-fab" id="phoneFab" title="Contact Futuora" aria-label="Contact us">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-</a>
+</button>
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -447,13 +691,17 @@
       <a href="#technologies">Technologies</a>
       <a href="#about">About</a>
       <a href="#projects">Our Work</a>
-      <a href="#team">Team</a>
       <a href="#contact">Contact</a>
+      <a href="careers.html">Careers</a>
     </nav>
     <div class="nav-cta">
-      <a href="tel:+94711068057" class="nav-phone" title="Call us">
+      <button class="nav-phone" id="navPhone" title="Contact us" style="border:none;cursor:pointer;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </a>
+      </button>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <a href="#contact" class="btn btn-dark" style="padding:11px 22px;font-size:0.85rem;">Get in Touch</a>
     </div>
   </div>
@@ -481,50 +729,50 @@
   <div class="container">
     <div class="services-header">
       <h2>Full-cycle engineering.<br>From idea to market-ready product.</h2>
-      <a href="#contact" class="btn btn-outline">Work with us</a>
+      <a href="#pricing" class="btn btn-outline">Work with us</a>
     </div>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2"/><path d="M12 12v-1"/></svg>
+        </div>
+        <h3>Hardware Devices and Prototyping</h3>
+        <p>End-to-end hardware development from PCB design and embedded firmware to enclosure fabrication. IoT-connected devices with sensor networks, wireless protocols (LoRa, BLE, MQTT) and cloud dashboards built to survive in the field.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
-        <h3>Product Design and Development</h3>
-        <p>From concept sketching to detailed CAD modelling and complete product development. We design products that are manufacturable, scalable, and market-ready.</p>
+        <h3>Industrial Automation and Robotics</h3>
+        <p>Helping Sri Lankan manufacturers modernise their production floors. Custom robotic systems, PLC integration, conveyor automation and vision-guided pick-and-place to cut labour costs and increase throughput.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <h3>Manufacturing and Fabrication</h3>
-        <p>Hands-on fabrication from material selection and precision machining to final assembly. CNC, injection moulding, composites, and more.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><path d="M23 13V11"/><circle cx="7" cy="12" r="1.5"/><path d="M14 10h2v4h-2z"/></svg>
-        </div>
-        <h3>IoT Product Development</h3>
-        <p>Smart connected solutions with sensor integration, firmware, wireless protocols (LoRa, BLE, MQTT), and cloud dashboards built to perform in the real world.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        </div>
-        <h3>Rapid Prototyping and Testing</h3>
-        <p>Fast-cycle prototyping via 3D printing, laser cutting, and FEA simulation. Validate your design before committing to full production investment.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        </div>
-        <h3>UAV Engineering</h3>
-        <p>Custom drone and fixed-wing UAV design covering aerodynamics, structural modelling, flight controller integration, AI-driven payload systems, and field testing.</p>
+        <h3>Software Development</h3>
+        <p>B2C products people use and B2B systems businesses rely on. Web apps, mobile apps, APIs and full-stack platforms built with clean architecture and fast delivery, from MVP to scale.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
         </div>
-        <h3>Automation and Robotics</h3>
-        <p>Robotic manipulation systems, industrial automation, intelligent control architectures, and AI-driven engineering applications from research to deployment.</p>
+        <h3>Agentic AI and Workflow Automation</h3>
+        <p>AI agents that run your business workflows so your team stops doing the same thing twice. Lead handling, document processing and reporting pipelines powered by n8n, modern LLM stacks and custom automation infrastructure.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <h3>3D Scanning and Reverse Engineering</h3>
+        <p>Millimetre-precision scanning to digitise existing parts, inspect manufactured components and reverse-engineer legacy products with no drawings. Accurate CAD models ready for redesign or reproduction.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 20h20M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></svg>
+        </div>
+        <h3>Product Design and CAD Engineering</h3>
+        <p>From concept sketch to production-ready design. SolidWorks modelling, FEA simulation and DFM analysis across mechanical, electromechanical and consumer products built to be manufacturable from day one.</p>
       </div>
     </div>
   </div>
@@ -628,7 +876,7 @@
           </text>
         </svg>
         <div class="circle-center">
-          <span class="circle-num" id="cnum1">0</span>
+          <span class="circle-num"><span id="cnum1">0</span><span style="font-size:0.75em;">+</span></span>
           <span class="circle-label">projects<br>delivered</span>
         </div>
       </div>
@@ -637,15 +885,12 @@
           <defs><path id="circ2" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
           <circle cx="100" cy="100" r="78" fill="none" stroke="#0a2a35" stroke-width="1"/>
           <text font-size="8.5" font-weight="600" fill="#1a4050" letter-spacing="3.8" font-family="Space Grotesk, Arial, sans-serif">
-            <textPath href="#circ2">RESEARCH FUNDED · RESEARCH FUNDED · RESEARCH FUNDED · </textPath>
+            <textPath href="#circ2">ACTIVE PROJECTS · ACTIVE PROJECTS · ACTIVE PROJECTS · </textPath>
           </text>
         </svg>
         <div class="circle-center">
-          <span class="circle-num">
-            <span style="font-size:0.6em;letter-spacing:0;font-weight:700;display:block;line-height:1.2;">AUD</span>
-            <span id="cnum2val">0</span><span style="font-size:0.75em;">k+</span>
-          </span>
-          <span class="circle-label">in research<br>grants</span>
+          <span class="circle-num"><span id="cnum2val">0</span></span>
+          <span class="circle-label">ongoing<br>projects</span>
         </div>
       </div>
     </div>
@@ -731,7 +976,7 @@
     </div>
     <div class="projects-grid">
 
-      <div class="project-card">
+      <div class="project-card" onclick="openProjModal('vending')" title="View project details">
         <div class="project-img-wrap">
           <img src="pics/Vending.png" alt="Futura Food Dispensary Machine">
           <span class="project-category-bar">Product Design and Fabrication</span>
@@ -740,7 +985,7 @@
         <div class="project-body">
           <h3>Futura Food Dispensary Machine</h3>
           <p class="project-tagline">A custom-built commercial smart vending machine, designed and fabricated in-house</p>
-          <p class="project-desc">A large-format smart food and drink vending machine built under Futuora Engineering. Custom galvanized steel cabinet with 7 dispensing trays, smart IoT controller, PAX A50 payment terminal, 10.1 inch touchscreen interface, and a full refrigeration system designed for Sri Lanka's ambient conditions.</p>
+          <p class="project-desc">Large-format smart vending machine with IoT controller, PAX A50 payment terminal, 10.1" touchscreen and full refrigeration system built for Sri Lanka's conditions.</p>
           <div class="project-tags">
             <span class="project-tag">SolidWorks CAD</span>
             <span class="project-tag">Sheet Metal</span>
@@ -751,16 +996,19 @@
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" onclick="openProjModal('splitwater')" title="View project details">
         <div class="project-img-wrap">
-          <img src="pics/RO.png" alt="Seawater Reverse Osmosis System">
+          <img src="pics/RO.png" alt="Split Water Seawater RO System">
           <span class="project-category-bar">Mechanical Engineering and Electronics</span>
-          <span class="project-status status-live">Active</span>
+          <span class="project-status status-live">Pre-order Open</span>
         </div>
         <div class="project-body">
-          <h3>Seawater Reverse Osmosis System</h3>
-          <p class="project-tagline">A commercial desalination system producing clean freshwater from seawater</p>
-          <p class="project-desc">A commercial seawater desalination unit producing 60 L/h of freshwater. Full SS316 stainless steel construction with ESP32-based automated pressure control and hardware overpressure protection. Designed for coastal deployment in Sri Lanka.</p>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <img src="pics/Split water logo.png" alt="Split Water" style="height:28px;width:auto;">
+          </div>
+          <h3>Split Water</h3>
+          <p class="project-tagline">Seawater desalination system, available for pre-order</p>
+          <p class="project-desc">60 L/h freshwater output from seawater. Full SS316 construction, automated pressure control, hardware overpressure protection. Designed for coastal and off-grid deployment.</p>
           <div class="project-tags">
             <span class="project-tag">Hydraulic Systems</span>
             <span class="project-tag">Embedded Systems</span>
@@ -775,160 +1023,38 @@
   </div>
 </section>
 
-<!-- FOUNDERS -->
-<section class="founders" id="team">
-  <div class="container">
-    <div class="founders-header">
-      <h2>Meet the team.</h2>
-      <p>The engineers behind every design, build, and delivery at Futuora.</p>
-    </div>
-    <div class="founders-grid">
-
-      <div class="founder-card">
-        <div class="founder-photo-wrap">
-          <img src="pics/Bhanuka.jpg" alt="Sachintha Bhanuka Dayawansa">
-          <div class="founder-photo-overlay"></div>
-        </div>
-        <div class="founder-body">
-          <h3>Sachintha Bhanuka Dayawansa</h3>
-          <p class="founder-title">Co-Founder · Lecturer in Mechatronics, Curtin University Colombo</p>
-          <p class="founder-bio">Lecturer and Discipline Lead for Mechanical and Mechatronics Engineering at Curtin University Colombo. Holds an M.Sc. in Electronics and Automation from the University of Moratuwa, specialising in optimal trajectory planning and control of robotic manipulators. Heads the Robotics and Intelligent Systems Research Group at Curtin Colombo. Published in IEEE MERCon, ICRA, and ICMA.</p>
-          <div class="founder-tags">
-            <span class="founder-tag">Robotics</span>
-            <span class="founder-tag">Mechatronics</span>
-            <span class="founder-tag">UAV Systems</span>
-            <span class="founder-tag">Optimal Control</span>
-            <span class="founder-tag">AI Engineering</span>
-            <span class="founder-tag">IEEE RAS</span>
-          </div>
-          <div class="founder-achievements">
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>AUD 18,000 grant: AI-Driven Intelligent UAV System for Infrastructure Monitoring</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>AUD 13,000 grant: AI-Driven Wildfire Risk Prediction and Monitoring</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>Best Oral Presentation, Mechatronics, Robotics and Automation track, ICIET 2023</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>Vice Chair, IEEE Industry Applications Society Sri Lanka Section</span></div>
-          </div>
-          <div class="founder-links" style="margin-top:18px;">
-            <a href="https://www.linkedin.com/in/bhanuka-dayawansa" target="_blank" class="founder-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="founder-card">
-        <div class="founder-photo-wrap">
-          <img src="pics/janitha.png" alt="Janitha Dissanayake">
-          <div class="founder-photo-overlay"></div>
-        </div>
-        <div class="founder-body">
-          <h3>Janitha Dissanayake</h3>
-          <p class="founder-title">Co-Founder · Mechanical Engineer and Industrial Product Designer</p>
-          <p class="founder-bio">Mechanical R and D Engineer and Industrial Product Designer with a passion for building real-world products from concept to scalable manufacturing. Specialises in mechanical design, electro-mechanical integration, and manufacturing optimisation. Previously Lead Mechanical Engineer at Atlas Labs. BSc (Hons) Mechanical Engineering, SLIIT.</p>
-          <div class="founder-tags">
-            <span class="founder-tag">SolidWorks</span>
-            <span class="founder-tag">Product Design</span>
-            <span class="founder-tag">FEA</span>
-            <span class="founder-tag">DFM / DFA</span>
-            <span class="founder-tag">CAE</span>
-            <span class="founder-tag">Manufacturing</span>
-          </div>
-          <div class="founder-achievements">
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>Lead Mechanical Engineer, Horcery Wearable Device at Atlas Labs. Enclosures, injection moulding, CNC, FEA.</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>Chair, IEEE Industry Applications Society Sri Lanka Chapter (2024 to 2026)</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>Formula Student Engineering Competition UK. CAD, FEA, CAM, Prototyping, Testing.</span></div>
-            <div class="founder-achievement"><span class="achievement-dot"></span><span>IIT Madras International Entrepreneurship Training Programme</span></div>
-          </div>
-          <div class="founder-links" style="margin-top:18px;">
-            <a href="https://www.linkedin.com/in/janitha-dissanayake" target="_blank" class="founder-link">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- PROCESS -->
 <section class="process">
-  <div class="process-inner">
-    <div class="process-left">
-      <h2>Three steps.<br>From your idea<br>to a real product.</h2>
-      <div class="process-visual" style="margin-top:32px;">
-        <div class="process-vis-step">
-          <div class="process-vis-num">1</div>
-          <div class="process-vis-content">
-            <h4>You share the idea</h4>
-            <p>Requirements, constraints, budget, timeline</p>
-          </div>
-        </div>
-        <div class="process-vis-step">
-          <div class="process-vis-num">2</div>
-          <div class="process-vis-content">
-            <h4>We design and prototype</h4>
-            <p>CAD, FEA, validation iterations</p>
-          </div>
-        </div>
-        <div class="process-vis-step">
-          <div class="process-vis-num">3</div>
-          <div class="process-vis-content">
-            <h4>We build and deliver</h4>
-            <p>Fabrication, testing, real-world ready</p>
-          </div>
-        </div>
-        <div class="process-vis-footer">
-          <div>
-            <div class="vis-stat-num">12+</div>
-            <div class="vis-stat-label">Projects<br>delivered</div>
-          </div>
-          <div>
-            <div class="vis-stat-num">48h</div>
-            <div class="vis-stat-label">To a plan<br>for your idea</div>
-          </div>
-          <div>
-            <div class="vis-stat-num">2</div>
-            <div class="vis-stat-label">Expert<br>founders</div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="process-header">
+      <h2>Three steps. From your idea to a real product.</h2>
+      <p>We keep it simple, fast, and transparent — every time.</p>
+    </div>
+    <div class="process-cards">
+      <div class="process-card">
+        <div class="process-card-num">01</div>
+        <h3>Share your idea.</h3>
+        <p>Tell us what you want to build. We discuss your requirements, constraints, budget, and timeline to understand exactly what success looks like for you.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-card-num">02</div>
+        <h3>We design and prototype.</h3>
+        <p>In days, not months. We produce CAD models, prototypes, and FEA results. You review, we iterate, until the design is validated and ready.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-card-num">03</div>
+        <h3>We build and deliver.</h3>
+        <p>Once validated, we move to fabrication and production. We track quality at every step and deliver a product ready for the real world.</p>
       </div>
     </div>
-    <div class="process-steps">
-      <div class="process-step">
-        <div class="step-num-badge">1</div>
-        <div>
-          <p class="step-eyebrow">Step 1</p>
-          <h3>Share your idea.</h3>
-          <p>Tell us what you want to build. We discuss your requirements, constraints, budget, and timeline to understand exactly what success looks like for you.</p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-num-badge">2</div>
-        <div>
-          <p class="step-eyebrow">Step 2</p>
-          <h3>We design and prototype.</h3>
-          <p>In days, not months. We produce CAD models, prototypes, and FEA results. You review, we iterate, until the design is validated and ready.</p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-num-badge">3</div>
-        <div>
-          <p class="step-eyebrow">Step 3</p>
-          <h3>We build and deliver.</h3>
-          <p>Once the design is validated, we move to fabrication and production. We track quality at every step and deliver a product ready for the real world.</p>
-        </div>
-      </div>
-      <div class="process-cta">
-        <a href="#contact" class="btn btn-teal" style="font-size:0.9rem;padding:12px 28px;">Get in Touch</a>
-      </div>
+    <div class="process-cta">
+      <a href="#contact" class="btn btn-teal" style="font-size:0.9rem;padding:12px 32px;">Get in Touch</a>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="pricing">
+<section class="pricing" id="pricing">
   <div class="container">
     <div class="pricing-header">
       <h2>How we work with you.</h2>
@@ -1005,7 +1131,7 @@
 <section class="cta-band" id="contact">
   <div class="container cta-band-inner">
     <h2>Ready to bring your idea to life?</h2>
-    <p>Talk to Bhanuka or Janitha. We will have a plan for your product within 48 hours.</p>
+    <p>Get in touch and our team will have a plan for your product within 48 hours.</p>
     <a href="mailto:hello@futuora.com" class="btn btn-teal" style="font-size:1rem;padding:16px 36px;">Get in Touch</a>
     <div class="cta-contact-row">
       <a href="tel:+94711068057" class="cta-contact-item" style="color:#4a8090;text-decoration:none;">
@@ -1037,7 +1163,7 @@
         </div>
         <p>Engineering and product innovation company. Digitize. Innovate. Create. Est. 2024, Sri Lanka.</p>
       </div>
-      <div class="footer-col">
+      <div class="footer-col footer-col-hide">
         <h4>Services</h4>
         <ul>
           <li><a href="#services">Product Design and Dev</a></li>
@@ -1048,7 +1174,7 @@
           <li><a href="#services">Automation and Robotics</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="footer-col footer-col-hide">
         <h4>Company</h4>
         <ul>
           <li><a href="#about">About Futuora</a></li>
@@ -1056,6 +1182,7 @@
           <li><a href="#projects">Our Work</a></li>
           <li><a href="#technologies">Technologies</a></li>
           <li><a href="#contact">Contact Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1117,8 +1244,8 @@
     const section = document.querySelector('.awards');
     if (section && section.getBoundingClientRect().top < window.innerHeight * 0.85) {
       counted = true;
-      countUp(document.getElementById('cnum1'), 12, 1400);
-      countUp(document.getElementById('cnum2val'), 36, 1400);
+      countUp(document.getElementById('cnum1'), 70, 1600);
+      countUp(document.getElementById('cnum2val'), 4, 800);
     }
   }
   window.addEventListener('scroll', checkCount, { passive: true });
@@ -1139,6 +1266,68 @@
       a.classList.toggle('active', href === current);
     });
   }, { passive: true });
+
+  // Project modals
+  function openProjModal(id) {
+    const el = document.getElementById('modal-' + id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeProjModal(id) {
+    const el = document.getElementById('modal-' + id);
+    if (!el) return;
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.proj-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.proj-modal-overlay.open').forEach(el => {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // Contact popup
+  const popup = document.getElementById('contactPopup');
+  function openPopup(trigger, direction) {
+    const rect = trigger.getBoundingClientRect();
+    const right = window.innerWidth - rect.right;
+    popup.style.right = Math.max(8, right) + 'px';
+    popup.style.left = 'auto';
+    if (direction === 'above') {
+      popup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+      popup.style.top = 'auto';
+    } else {
+      popup.style.top = (rect.bottom + 10) + 'px';
+      popup.style.bottom = 'auto';
+    }
+    const isOpen = popup.classList.contains('open');
+    popup.classList.remove('open');
+    if (!isOpen) popup.classList.add('open');
+  }
+  document.getElementById('phoneFab').addEventListener('click', (e) => { e.stopPropagation(); openPopup(e.currentTarget, 'above'); });
+  document.getElementById('navPhone').addEventListener('click', (e) => { e.stopPropagation(); openPopup(e.currentTarget, 'below'); });
+  document.addEventListener('click', (e) => { if (!popup.contains(e.target)) popup.classList.remove('open'); });
+
+  // Dark mode toggle
+  const toggleBtn = document.getElementById('theme-toggle');
+  const saved = localStorage.getItem('futuora-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  toggleBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('futuora-theme', next);
+  });
 
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers at Futuora Engineering</title>
+  <link rel="icon" type="image/png" href="pics/Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal: #00C8D4; --black: #063347; --dark-bg: #031e2c;
+      --gray-light: #f0f7f8; --gray-mid: #d8e8ec; --gray-text: #4a7080;
+      --white: #ffffff;
+    }
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+    h3 { font-size: 1rem; font-weight: 700; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--gray-mid); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; color: var(--black); letter-spacing: -0.03em; }
+    .nav-logo img { height: 32px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-family: inherit; font-size: 0.88rem; cursor: pointer; transition: all 0.15s; text-decoration: none; border: none; }
+    .btn-teal { background: var(--teal); color: var(--dark-bg); padding: 10px 22px; }
+    .btn-teal:hover { background: #00b0bb; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--gray-mid); color: var(--black); padding: 9px 20px; }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+    .theme-toggle { width: 38px; height: 38px; background: var(--gray-light); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--black); flex-shrink: 0; }
+    .theme-toggle:hover { background: var(--gray-mid); }
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: block; color: var(--teal); }
+    [data-theme="dark"] .theme-toggle { background: #0a2a35; }
+
+    /* HERO */
+    .careers-hero { background: var(--dark-bg); padding: 80px 0 60px; position: relative; overflow: hidden; }
+    .careers-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,212,0.08) 0%, transparent 70%); pointer-events: none; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(0,200,212,0.1); border: 1px solid rgba(0,200,212,0.2); color: var(--teal); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; }
+    .careers-hero h1 { color: #c8e4ec; margin-bottom: 16px; }
+    .careers-hero h1 span { color: var(--teal); }
+    .careers-hero p { color: #4a7080; font-size: 1.05rem; max-width: 540px; line-height: 1.7; margin-bottom: 32px; }
+    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+    .hero-stat-item { }
+    .hero-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--teal); letter-spacing: -0.04em; }
+    .hero-stat-label { font-size: 0.75rem; color: #2a5060; margin-top: 2px; }
+
+    /* JOBS */
+    .jobs-section { padding: 72px 0; }
+    .dept-block { margin-bottom: 64px; }
+    .dept-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); background: rgba(0,200,212,0.08); border: 1px solid rgba(0,200,212,0.18); padding: 5px 14px; border-radius: 20px; margin-bottom: 24px; }
+    .jobs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .job-card { border: 1px solid var(--gray-mid); border-radius: 14px; padding: 24px 24px 20px; background: var(--white); transition: box-shadow 0.2s, border-color 0.2s; display: flex; flex-direction: column; gap: 12px; }
+    .job-card:hover { box-shadow: 0 8px 32px rgba(0,100,120,0.09); border-color: rgba(0,200,212,0.3); }
+    .job-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .job-title { font-size: 1rem; font-weight: 700; color: var(--black); line-height: 1.3; }
+    .job-badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+    .badge { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .badge-type { background: var(--gray-light); color: var(--gray-text); border: 1px solid var(--gray-mid); }
+    .badge-new { background: rgba(0,200,212,0.1); color: var(--teal); border: 1px solid rgba(0,200,212,0.25); }
+    .job-desc { font-size: 0.84rem; color: var(--gray-text); line-height: 1.65; }
+    .job-reqs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .job-req { font-size: 0.68rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 6px; padding: 3px 10px; color: var(--black); }
+    .job-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--gray-mid); margin-top: auto; }
+    .job-location { font-size: 0.75rem; color: var(--gray-text); display: flex; align-items: center; gap: 5px; }
+    .apply-btn { font-size: 0.78rem; font-weight: 700; color: var(--teal); background: rgba(0,200,212,0.08); border: 1px solid rgba(0,200,212,0.2); padding: 7px 16px; border-radius: 7px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .apply-btn:hover { background: var(--teal); color: var(--dark-bg); }
+
+    /* APPLY MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(3,30,44,0.7); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--white); border-radius: 20px; padding: 36px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; transform: translateY(16px) scale(0.98); transition: transform 0.2s; position: relative; }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border: none; background: var(--gray-light); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--black); font-size: 1rem; }
+    .modal-close:hover { background: var(--gray-mid); }
+    .modal-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px; }
+    .modal h3 { font-size: 1.25rem; font-weight: 800; color: var(--black); margin-bottom: 20px; line-height: 1.3; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 0.78rem; font-weight: 700; color: var(--black); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-mid); border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; color: var(--black); background: var(--white);
+      transition: border-color 0.15s; outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-note { font-size: 0.75rem; color: var(--gray-text); background: var(--gray-light); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.55; }
+    .form-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--dark-bg); font-family: inherit; font-size: 0.92rem; font-weight: 700; border: none; border-radius: 9px; cursor: pointer; transition: background 0.15s; }
+    .form-submit:hover { background: #00b0bb; }
+
+    /* CTA BANNER */
+    .open-apps { background: var(--gray-light); padding: 64px 0; text-align: center; }
+    .open-apps h2 { margin-bottom: 12px; }
+    .open-apps p { color: var(--gray-text); font-size: 0.95rem; max-width: 480px; margin: 0 auto 28px; }
+
+    /* FOOTER */
+    .footer-mini { background: var(--dark-bg); padding: 28px 0; text-align: center; }
+    .footer-mini p { font-size: 0.78rem; color: #2a5060; }
+    .footer-mini a { color: var(--teal); }
+
+    /* DARK MODE */
+    [data-theme="dark"] body { background: #031e2c; color: #c8e4ec; }
+    [data-theme="dark"] nav { background: rgba(3,30,44,0.95); border-bottom-color: #0a2a35; }
+    [data-theme="dark"] .nav-logo { color: #c8e4ec; }
+    [data-theme="dark"] .btn-outline { border-color: #0a2a35; color: #c8e4ec; }
+    [data-theme="dark"] .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+    [data-theme="dark"] .jobs-section { background: #031e2c; }
+    [data-theme="dark"] .job-card { background: #031e2c; border-color: #0a2a35; }
+    [data-theme="dark"] .job-card:hover { border-color: rgba(0,200,212,0.3); }
+    [data-theme="dark"] .job-title { color: #c8e4ec; }
+    [data-theme="dark"] .job-req { background: #041828; border-color: #0a2a35; color: #c8e4ec; }
+    [data-theme="dark"] .badge-type { background: #041828; border-color: #0a2a35; color: #2a5060; }
+    [data-theme="dark"] .job-card-footer { border-top-color: #0a2a35; }
+    [data-theme="dark"] .open-apps { background: #041828; }
+    [data-theme="dark"] .open-apps h2 { color: #c8e4ec; }
+    [data-theme="dark"] .modal { background: #031e2c; }
+    [data-theme="dark"] .modal h3 { color: #c8e4ec; }
+    [data-theme="dark"] .modal-close { background: #0a2a35; color: #c8e4ec; }
+    [data-theme="dark"] .form-group label { color: #c8e4ec; }
+    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea, [data-theme="dark"] .form-group select { background: #041828; border-color: #0a2a35; color: #c8e4ec; }
+    [data-theme="dark"] .form-note { background: #041828; }
+    [data-theme="dark"] .dept-label { background: rgba(0,200,212,0.05); }
+
+    @media (max-width: 768px) {
+      .jobs-grid { grid-template-columns: 1fr; }
+      .job-card-top { flex-direction: column; gap: 8px; }
+      .nav-inner { padding: 0 16px; }
+      .container { padding: 0 16px; }
+      .careers-hero { padding: 56px 0 44px; }
+      .modal { padding: 24px 20px; }
+      .hero-stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="pics/Logo.png" alt="Futuora Engineering">
+      <span>Futuora Engineering</span>
+    </a>
+    <div class="nav-right">
+      <a href="index.html" class="btn btn-outline">Back to site</a>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="careers-hero">
+  <div class="container">
+    <div class="hero-tag">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+      We are hiring
+    </div>
+    <h1>Build real things.<br><span>Join Futuora.</span></h1>
+    <p>We are a small team of engineers building hardware, software and intelligent systems. If you want to work on products that actually ship, this is the place.</p>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">9</div>
+        <div class="hero-stat-label">Open positions</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Departments</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">Hybrid</div>
+        <div class="hero-stat-label">Work model</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section class="jobs-section">
+  <div class="container">
+
+    <!-- ENGINEERING -->
+    <div class="dept-block">
+      <div class="dept-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Engineering
+      </div>
+      <div class="jobs-grid">
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Engineering Intern<br>Mechatronics / Mechanical</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Join our startup team and work on real products from day one. You will be involved in plumbing and MEP systems, R&D, and product commercialisation across live projects.</p>
+          <div class="job-reqs">
+            <span class="job-req">SolidWorks</span>
+            <span class="job-req">MEP Systems</span>
+            <span class="job-req">R&D</span>
+            <span class="job-req">Problem Solving</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Engineering Intern, Mechatronics / Mechanical')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Mechanical Design Engineer</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Lead CAD design and mechanical engineering on hardware products. You will own design from concept through to production-ready drawings, FEA validation and DFM sign-off.</p>
+          <div class="job-reqs">
+            <span class="job-req">SolidWorks</span>
+            <span class="job-req">FEA / FEM</span>
+            <span class="job-req">DFM / DFA</span>
+            <span class="job-req">GD&T</span>
+            <span class="job-req">2+ years</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Mechanical Design Engineer')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Electronics and Embedded Systems Engineer</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Design and develop hardware devices from PCB layout to embedded firmware. Work on IoT products with real-world sensor integration and wireless connectivity.</p>
+          <div class="job-reqs">
+            <span class="job-req">PCB Design</span>
+            <span class="job-req">Embedded C/C++</span>
+            <span class="job-req">LoRa / BLE / MQTT</span>
+            <span class="job-req">KiCad or Altium</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Electronics and Embedded Systems Engineer')">Apply Now</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SOFTWARE -->
+    <div class="dept-block">
+      <div class="dept-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Software
+      </div>
+      <div class="jobs-grid">
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Associate Frontend Developer<br>React / WordPress</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Build web interfaces for client projects and internal tools. You will work across React apps and WordPress sites, turning designs into responsive, production-ready code.</p>
+          <div class="job-reqs">
+            <span class="job-req">React.js</span>
+            <span class="job-req">WordPress</span>
+            <span class="job-req">HTML / CSS</span>
+            <span class="job-req">Tailwind</span>
+            <span class="job-req">Responsive Design</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Remote / Hybrid
+            </span>
+            <button class="apply-btn" onclick="openModal('Associate Frontend Developer, React / WordPress')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Full Stack Developer</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Own features end-to-end across B2C and B2B products. Frontend to backend, database to deployment. We ship fast and you will too.</p>
+          <div class="job-reqs">
+            <span class="job-req">React / Next.js</span>
+            <span class="job-req">Node.js / Python</span>
+            <span class="job-req">REST APIs</span>
+            <span class="job-req">PostgreSQL</span>
+            <span class="job-req">Docker</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Full Stack Developer')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">AI and Automation Engineer</div>
+            <div class="job-badges">
+              <span class="badge badge-new">Hiring now</span>
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Build AI agents and automated workflows that replace repetitive work. You will design and deploy agentic systems using n8n, LLM APIs and custom infrastructure for real client pipelines.</p>
+          <div class="job-reqs">
+            <span class="job-req">Python</span>
+            <span class="job-req">n8n</span>
+            <span class="job-req">LLM APIs</span>
+            <span class="job-req">Workflow Automation</span>
+            <span class="job-req">API Integration</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Remote / Hybrid
+            </span>
+            <button class="apply-btn" onclick="openModal('AI and Automation Engineer')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Software Development Lead</div>
+            <div class="job-badges">
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Lead our software team across multiple client engagements. Define architecture, set engineering standards, mentor developers and own technical delivery end-to-end.</p>
+          <div class="job-reqs">
+            <span class="job-req">5+ years</span>
+            <span class="job-req">Team Leadership</span>
+            <span class="job-req">System Architecture</span>
+            <span class="job-req">Full Stack</span>
+            <span class="job-req">Client Management</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Software Development Lead')">Apply Now</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OPERATIONS -->
+    <div class="dept-block">
+      <div class="dept-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 7V5a2 2 0 0 0-4 0v2"/></svg>
+        Operations and Admin
+      </div>
+      <div class="jobs-grid">
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">HR and Talent Associate</div>
+            <div class="job-badges">
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Own hiring and people operations for a growing engineering team. Source candidates, run interviews, manage onboarding and help build a culture people want to be part of.</p>
+          <div class="job-reqs">
+            <span class="job-req">Recruitment</span>
+            <span class="job-req">Onboarding</span>
+            <span class="job-req">People Ops</span>
+            <span class="job-req">Communication</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('HR and Talent Associate')">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-title">Operations and Admin Manager</div>
+            <div class="job-badges">
+              <span class="badge badge-type">Full-time</span>
+            </div>
+          </div>
+          <p class="job-desc">Keep the business running smoothly. Coordinate between teams, manage vendors and suppliers, handle admin processes and support leadership with day-to-day operations.</p>
+          <div class="job-reqs">
+            <span class="job-req">Project Coordination</span>
+            <span class="job-req">Vendor Management</span>
+            <span class="job-req">Organisation</span>
+            <span class="job-req">Communication</span>
+          </div>
+          <div class="job-card-footer">
+            <span class="job-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Hybrid · Sri Lanka
+            </span>
+            <button class="apply-btn" onclick="openModal('Operations and Admin Manager')">Apply Now</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- OPEN APPS BANNER -->
+<section class="open-apps">
+  <div class="container">
+    <h2>Do not see your role?</h2>
+    <p>We are always open to hearing from talented engineers, designers and operators. Send us a message and tell us what you are good at.</p>
+    <button class="btn btn-teal" style="font-size:0.92rem;padding:13px 28px;" onclick="openModal('Open Application')">Send an open application</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-mini">
+  <div class="container">
+    <p>Futuora Engineering &copy; 2025 &nbsp;·&nbsp; <a href="mailto:amithnal@futuora.com">amithnal@futuora.com</a> &nbsp;·&nbsp; <a href="index.html">Back to main site</a></p>
+  </div>
+</footer>
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <p class="modal-tag">Applying for</p>
+    <h3 id="modal-job-title">Position</h3>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="f-name" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="f-email" placeholder="you@email.com">
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" id="f-phone" placeholder="+94 XX XXX XXXX">
+    </div>
+    <div class="form-group">
+      <label>Why are you a good fit?</label>
+      <textarea id="f-message" placeholder="Tell us about your background and why you are interested in this role..."></textarea>
+    </div>
+    <div class="form-note">
+      Clicking submit will open your email client with your details pre-filled. Please attach your CV before sending.
+    </div>
+    <button class="form-submit" onclick="submitApplication()">Submit Application</button>
+  </div>
+</div>
+
+<script>
+  // Dark mode
+  const toggleBtn = document.getElementById('theme-toggle');
+  const saved = localStorage.getItem('futuora-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  toggleBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('futuora-theme', next);
+  });
+
+  // Modal
+  let currentJob = '';
+  function openModal(jobTitle) {
+    currentJob = jobTitle;
+    document.getElementById('modal-job-title').textContent = jobTitle;
+    document.getElementById('applyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('applyModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('applyModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  function submitApplication() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const message = document.getElementById('f-message').value.trim();
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
+    const subject = encodeURIComponent('Application: ' + currentJob);
+    const body = encodeURIComponent(
+      'Position: ' + currentJob + '\n\n' +
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + phone + '\n\n' +
+      'Message:\n' + message + '\n\n' +
+      '--- Please attach your CV to this email before sending ---'
+    );
+    window.location.href = 'mailto:amithnal@futuora.com?subject=' + subject + '&body=' + body;
+    closeModal();
+  }
+</script>
+</body>
+</html>

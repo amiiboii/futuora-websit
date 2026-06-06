@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futuora Engineering</title>
+<link rel="icon" type="image/png" href="pics/Logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:      #063347;
+    --white:      #ffffff;
+    --teal:       #00C8D4;
+    --gray-light: #f0f7f8;
+    --gray-mid:   #cfe6ea;
+    --gray-text:  #4a7080;
+    --dark-bg:    #031e2c;
+    --font: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--black); background: var(--white); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; display: block; }
+  ul  { list-style: none; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-weight: 700; font-size: 0.9rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; border: none; letter-spacing: 0.02em; font-family: var(--font); }
+  .btn-dark   { background: var(--black); color: var(--white); }
+  .btn-dark:hover { background: #0a4a63; }
+  .btn-teal { background: var(--teal); color: var(--dark-bg); }
+  .btn-teal:hover { background: #00b0bb; }
+  .btn-outline { background: transparent; color: var(--black); border: 1.5px solid var(--black); }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section    { padding: 80px 0; }
+
+  h1 { font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; }
+  h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; }
+  h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* PHONE FAB */
+  .phone-fab {
+    position: fixed; bottom: 28px; right: 28px; width: 52px; height: 52px;
+    background: var(--teal); color: var(--dark-bg); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,200,212,0.4); z-index: 250;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .phone-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,200,212,0.55); }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0,0,0,0.07); height: 66px; display: flex; align-items: center; transition: box-shadow 0.3s; }
+  .nav.scrolled { box-shadow: 0 2px 20px rgba(6,51,71,0.08); }
+  .nav-inner { width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; gap: 32px; }
+  .nav-logo { flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+  .nav-logo img { height: 36px; width: auto; }
+  .nav-logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black); }
+  .nav-links { display: flex; gap: 2px; flex: 1; }
+  .nav-links a { padding: 8px 14px; font-size: 0.84rem; font-weight: 600; border-radius: 4px; color: var(--black); transition: background 0.15s, color 0.15s; letter-spacing: 0.01em; }
+  .nav-links a:hover  { background: var(--gray-light); }
+  .nav-links a.active { color: var(--teal); }
+  .nav-cta { flex-shrink: 0; display: flex; align-items: center; gap: 10px; }
+  .nav-phone { width: 38px; height: 38px; background: var(--gray-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--black); transition: background 0.15s; }
+  .nav-phone:hover { background: var(--gray-mid); }
+
+  /* HERO */
+  .hero { position: relative; min-height: 620px; overflow: hidden; display: flex; align-items: center; background: #f5fbfc; }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat; clip-path: polygon(42% 0, 100% 0, 100% 100%, 35% 100%); }
+  .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, #f5fbfc 38%, transparent 60%); }
+  .hero-content { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 80px 28px; width: 100%; }
+  .hero-text { max-width: 560px; }
+  .hero-text h1 { margin-bottom: 20px; color: var(--black); }
+  .hero-rotating { color: var(--teal); display: block; }
+  .hero-sub { font-size: 1rem; color: #4a7080; margin-bottom: 32px; max-width: 420px; line-height: 1.65; }
+
+  /* SERVICES */
+  .services { background: var(--gray-light); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; gap: 24px; }
+  .services-header h2 { max-width: 440px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray-mid); border-radius: 12px; overflow: hidden; }
+  .service-card { background: var(--white); padding: 32px 28px; transition: background 0.2s; }
+  .service-card:hover { background: #fafefe; }
+  .service-icon { width: 42px; height: 42px; background: var(--black); border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+  .service-card h3 { margin-bottom: 8px; }
+  .service-card p { font-size: 0.87rem; color: var(--gray-text); line-height: 1.6; }
+
+  /* TOOLS BAR */
+  .featured { background: #021a27; padding: 40px 0; }
+  .featured-inner { max-width: 1320px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; gap: 40px; }
+  .featured-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: #2a5060; white-space: nowrap; }
+  .featured-divider { width: 1px; height: 32px; background: #0d3040; flex-shrink: 0; }
+  .featured-logos { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+  .featured-logo { font-size: 0.95rem; font-weight: 700; color: #1e4f60; }
+
+  /* TECH MARQUEE */
+  .tech { background: var(--gray-light); overflow: hidden; }
+  .tech-header { text-align: center; margin-bottom: 48px; }
+  .tech-header h2 { margin-bottom: 12px; }
+  .tech-header h2 span { color: var(--teal); }
+  .tech-header p { color: var(--gray-text); max-width: 560px; margin: 0 auto; font-size: 0.95rem; }
+  .marquee-wrap { overflow: hidden; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+  .marquee-track.reverse { animation: marquee-rev 32s linear infinite; }
+  .marquee-item { font-size: clamp(1.6rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; color: #c5dde2; padding: 0 32px; white-space: nowrap; line-height: 1.3; }
+  .marquee-sep { font-size: clamp(1.6rem, 3.5vw, 2.8rem); color: var(--teal); padding: 0 8px; line-height: 1.3; font-weight: 800; }
+  @keyframes marquee     { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+  @keyframes marquee-rev { from { transform: translateX(-50%); } to { transform: translateX(0); }    }
+  .tech-cta { text-align: center; margin-top: 40px; }
+
+  /* CAPABILITIES DARK */
+  .awards { background: var(--dark-bg); color: var(--white); padding: 80px 0; overflow: hidden; }
+  .awards-inner { max-width: 1320px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 48px; align-items: center; }
+  .awards-eyebrow { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: #1a4050; margin-bottom: 12px; }
+  .awards-left .teal { color: var(--teal); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; display: block; margin-bottom: 4px; }
+  .awards-left h2 { color: var(--white); font-size: clamp(1.4rem, 2.5vw, 2rem); margin-bottom: 16px; }
+  .awards-left p  { color: #2a5060; font-size: 0.88rem; line-height: 1.65; margin-bottom: 28px; }
+  .awards-link { color: var(--teal); font-size: 0.88rem; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; gap: 6px; }
+  .awards-circles { display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; }
+  .circle-stat { position: relative; width: 200px; height: 200px; flex-shrink: 0; }
+  .circle-stat svg { width: 200px; height: 200px; animation: spin-slow 18s linear infinite; position: absolute; inset: 0; }
+  .circle-stat.ccw svg { animation-direction: reverse; }
+  .circle-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+  .circle-num { font-size: 2.2rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1; }
+  .circle-label { font-size: 0.68rem; color: #2a5060; margin-top: 4px; line-height: 1.3; font-weight: 500; }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .awards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .award-item { background: #041828; border-radius: 10px; padding: 18px 16px; border: 1px solid #0a3040; }
+  .award-logo-text { font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--white); margin-bottom: 6px; }
+  .award-desc { font-size: 0.7rem; color: #2a5060; line-height: 1.4; }
+
+  /* WHY FUTUORA */
+  .wonder { background: var(--gray-light); padding: 80px 0; }
+  .wonder-top { text-align: center; margin-bottom: 48px; }
+  .wonder-top h2 span { color: var(--teal); }
+  .wonder-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 760px; margin: 0 auto 56px; }
+  .wonder-feat { display: flex; gap: 12px; align-items: flex-start; }
+  .wonder-check { flex-shrink: 0; width: 20px; height: 20px; background: var(--teal); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .wonder-check svg { width: 12px; height: 12px; }
+  .wonder-feat h3 { font-size: 0.9rem; margin-bottom: 4px; color: var(--black); }
+  .wonder-feat p  { font-size: 0.82rem; color: var(--gray-text); line-height: 1.55; }
+  .wonder-cta-wrap { text-align: center; margin-top: 20px; }
+  .wonder-cta-wrap h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
+
+  /* PROJECTS */
+  .projects-section { background: var(--white); border-top: 1px solid var(--gray-mid); padding: 80px 0; }
+  .projects-header { margin-bottom: 48px; }
+  .projects-header h2 { margin-bottom: 8px; }
+  .projects-header p { color: var(--gray-text); font-size: 0.95rem; }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .project-card { border: 1px solid var(--gray-mid); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.3s, border-color 0.3s; }
+  .project-card:hover { box-shadow: 0 16px 56px rgba(0,100,120,0.1); border-color: rgba(0,200,212,0.3); }
+  .project-img-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--dark-bg); }
+  .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .project-card:hover .project-img-wrap img { transform: scale(1.04); }
+  .project-category-bar { position: absolute; top: 14px; left: 14px; background: rgba(3,30,44,0.85); backdrop-filter: blur(6px); padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+  .project-status { position: absolute; top: 14px; right: 14px; padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .status-dev  { background: rgba(0,200,212,0.18); color: var(--teal); border: 1px solid rgba(0,200,212,0.35); }
+  .status-live { background: rgba(0,200,100,0.18); color: #00d084; border: 1px solid rgba(0,200,100,0.35); }
+  .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .project-body h3 { font-size: 1.1rem; font-weight: 800; color: var(--black); margin-bottom: 6px; letter-spacing: -0.02em; }
+  .project-tagline { font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 12px; }
+  .project-desc { font-size: 0.86rem; color: var(--gray-text); line-height: 1.7; margin-bottom: 18px; flex: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .project-tag { padding: 4px 11px; font-size: 0.68rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 20px; color: var(--black); }
+
+  /* FOUNDERS */
+  .founders { background: var(--gray-light); padding: 80px 0; }
+  .founders-header { text-align: center; max-width: 580px; margin: 0 auto 56px; }
+  .founders-header h2 { margin-bottom: 12px; }
+  .founders-header p { color: var(--gray-text); font-size: 0.95rem; }
+  .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1000px; margin: 0 auto; }
+  .founder-card { border: 1px solid var(--gray-mid); border-radius: 16px; overflow: hidden; transition: box-shadow 0.3s, border-color 0.3s; background: var(--white); }
+  .founder-card:hover { box-shadow: 0 12px 48px rgba(0,100,120,0.1); border-color: rgba(0,200,212,0.35); }
+  .founder-photo-wrap { height: 300px; overflow: hidden; background: #021a27; position: relative; }
+  .founder-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.5s; }
+  .founder-card:hover .founder-photo-wrap img { transform: scale(1.03); }
+  .founder-photo-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to top, rgba(2,26,39,0.85), transparent); }
+  .founder-body { padding: 28px; }
+  .founder-body h3 { font-size: 1.15rem; color: var(--black); margin-bottom: 4px; }
+  .founder-title { font-size: 0.78rem; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .founder-bio { font-size: 0.86rem; color: var(--gray-text); line-height: 1.7; margin-bottom: 18px; }
+  .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .founder-tag { padding: 4px 12px; font-size: 0.7rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 20px; color: var(--black); }
+  .founder-links { display: flex; gap: 10px; }
+  .founder-link { padding: 7px 16px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--gray-mid); border-radius: 6px; color: var(--black); display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+  .founder-link:hover { border-color: var(--teal); color: var(--teal); }
+  .founder-achievements { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gray-mid); display: flex; flex-direction: column; gap: 6px; }
+  .founder-achievement { display: flex; gap: 8px; align-items: flex-start; font-size: 0.78rem; color: var(--gray-text); line-height: 1.4; }
+  .achievement-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 5px; }
+
+  /* PROCESS */
+  .process { background: var(--white); padding: 80px 0; }
+  .process-inner { max-width: 1320px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .process-left h2 { margin-bottom: 32px; }
+  .process-photo { width: 200px; height: 220px; border-radius: 16px; overflow: hidden; }
+  .process-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .process-steps { display: flex; flex-direction: column; }
+  .process-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--gray-mid); }
+  .process-step:last-child { border-bottom: none; }
+  .step-num-badge { flex-shrink: 0; width: 32px; height: 32px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--dark-bg); margin-top: 2px; }
+  .step-eyebrow { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #99bfc8; margin-bottom: 6px; }
+  .process-step h3 { font-size: 1rem; margin-bottom: 6px; }
+  .process-step p  { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
+  .process-cta { margin-top: 28px; }
+
+  /* CTA BAND */
+  .cta-band { background: var(--dark-bg); color: var(--white); padding: 80px 0; text-align: center; position: relative; overflow: hidden; }
+  .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 110%, rgba(0,200,212,0.15) 0%, transparent 68%); }
+  .cta-band-inner { position: relative; }
+  .cta-band h2 { color: var(--white); margin-bottom: 12px; }
+  .cta-band p  { color: #2a5060; margin-bottom: 32px; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .cta-contact-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+  .cta-contact-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #4a8090; }
+
+  /* FOOTER */
+  .footer { background: #020f17; color: var(--white); padding: 64px 0 32px; }
+  .footer-top { display: grid; grid-template-columns: 220px 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 0.82rem; color: #1a4050; margin-top: 12px; line-height: 1.7; }
+  .footer-logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .footer-logo-wrap img { height: 32px; width: auto; }
+  .footer-logo-name { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: white; }
+  .footer-col h4 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #1a4050; margin-bottom: 16px; }
+  .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: 0.84rem; color: #2a5060; transition: color 0.15s; }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid #0a2030; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 0.77rem; color: #1a4050; }
+  .social-links { display: flex; gap: 10px; }
+  .social-links a { width: 34px; height: 34px; border-radius: 50%; background: #0a2030; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #2a5060; font-weight: 700; transition: all 0.15s; }
+  .social-links a:hover { background: #0f3040; color: var(--white); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .awards-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .awards-inner { grid-template-columns: 1fr; text-align: center; }
+    .awards-circles { flex-direction: row; justify-content: center; }
+    .process-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .hero-bg { clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%); }
+    .founders-grid { grid-template-columns: 1fr; max-width: 520px; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-logo-text { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .wonder-features { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .services-header { flex-direction: column; align-items: flex-start; }
+    .hero-bg { display: none; }
+    .hero-content { padding: 48px 20px; }
+    .hero-sub { max-width: 100%; }
+    .section { padding: 56px 0; }
+    .awards-inner { gap: 32px; }
+    .awards-circles { flex-direction: row; gap: 12px; }
+    .circle-stat { width: 150px; height: 150px; }
+    .circle-stat svg { width: 150px; height: 150px; }
+    .circle-num { font-size: 1.7rem; }
+    .awards-grid { grid-template-columns: 1fr; gap: 8px; }
+    .tech-cta { padding: 0 20px; }
+    .featured-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .featured-divider { display: none; }
+    .featured-logos { gap: 20px; }
+    .wonder-cta-wrap h3 { font-size: 1.15rem; }
+    .process-left { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .process-photo { width: 160px; height: 180px; }
+    .process-steps { padding: 0 4px; }
+    .project-body { padding: 18px; }
+    .founders-grid { max-width: 100%; }
+    .founder-photo-wrap { height: 240px; }
+    .cta-contact-row { flex-direction: column; align-items: center; gap: 12px; }
+    .footer-top { gap: 28px; }
+    .phone-fab { bottom: 16px; right: 16px; width: 46px; height: 46px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .wonder-features { gap: 16px; }
+    .founder-body { padding: 20px; }
+    h2 { letter-spacing: -0.025em; }
+    .awards-link { justify-content: center; }
+    .btn { padding: 12px 20px; font-size: 0.85rem; }
+  }
+  @media (max-width: 400px) {
+    .nav-inner { padding: 0 16px; gap: 12px; }
+    .nav-cta .btn { display: none; }
+    .awards-circles { gap: 8px; }
+    .circle-stat { width: 130px; height: 130px; }
+    .circle-stat svg { width: 130px; height: 130px; }
+    .circle-num { font-size: 1.4rem; }
+    .marquee-item { font-size: 1.4rem; }
+    .marquee-sep { font-size: 1.4rem; }
+    .container { padding: 0 16px; }
+    .service-card { padding: 24px 18px; }
+    .founder-photo-wrap { height: 200px; }
+    h1 { font-size: 1.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PHONE FAB -->
+<a href="tel:+94711068057" class="phone-fab" title="Call Futuora">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <img src="pics/Logo.png" alt="Futuora">
+      <span class="nav-logo-text">Futuora</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#technologies">Technologies</a>
+      <a href="#about">About</a>
+      <a href="#projects">Our Work</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:+94711068057" class="nav-phone" title="Call us">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-dark" style="padding:11px 22px;font-size:0.85rem;">Get in Touch</a>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>
+        Build Your Vision With Our Expert
+        <span class="hero-rotating" id="rotating-text">Product Designers</span>
+      </h1>
+      <p class="hero-sub">From concept to production. Futuora delivers end-to-end engineering, IoT, fabrication, and UAV solutions for startups and innovators.</p>
+      <a href="#contact" class="btn btn-teal" style="font-size:1rem;padding:16px 32px;">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <h2>Full-cycle engineering.<br>From idea to market-ready product.</h2>
+      <a href="#contact" class="btn btn-outline">Work with us</a>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Product Design and Development</h3>
+        <p>From concept sketching to detailed CAD modelling and complete product development. We design products that are manufacturable, scalable, and market-ready.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Manufacturing and Fabrication</h3>
+        <p>Hands-on fabrication from material selection and precision machining to final assembly. CNC, injection moulding, composites, and more.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><path d="M23 13V11"/><circle cx="7" cy="12" r="1.5"/><path d="M14 10h2v4h-2z"/></svg>
+        </div>
+        <h3>IoT Product Development</h3>
+        <p>Smart connected solutions with sensor integration, firmware, wireless protocols (LoRa, BLE, MQTT), and cloud dashboards built to perform in the real world.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Rapid Prototyping and Testing</h3>
+        <p>Fast-cycle prototyping via 3D printing, laser cutting, and FEA simulation. Validate your design before committing to full production investment.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3>UAV Engineering</h3>
+        <p>Custom drone and fixed-wing UAV design covering aerodynamics, structural modelling, flight controller integration, AI-driven payload systems, and field testing.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+        </div>
+        <h3>Automation and Robotics</h3>
+        <p>Robotic manipulation systems, industrial automation, intelligent control architectures, and AI-driven engineering applications from research to deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS BAR -->
+<section class="featured">
+  <div class="featured-inner">
+    <span class="featured-label">Tools and platforms we use</span>
+    <div class="featured-divider"></div>
+    <div class="featured-logos">
+      <span class="featured-logo">SolidWorks</span>
+      <span class="featured-logo">AutoCAD</span>
+      <span class="featured-logo">ANSYS</span>
+      <span class="featured-logo">Arduino / ESP32</span>
+      <span class="featured-logo">ArduPilot</span>
+      <span class="featured-logo">ROS</span>
+    </div>
+  </div>
+</section>
+
+<!-- TECH MARQUEE -->
+<section class="section tech" id="technologies">
+  <div class="container">
+    <div class="tech-header">
+      <h2>Yes, we cover the engineering tools and technologies you rely on<span>.</span></h2>
+      <p>Hands-on expertise across the full hardware and software stack. From CAD and embedded firmware to AI, robotics, and IoT cloud platforms.</p>
+    </div>
+  </div>
+  <div class="marquee-wrap" style="margin-bottom:4px;">
+    <div class="marquee-track">
+      <span class="marquee-item">SolidWorks</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">CAD / CAM</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ESP32</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Arduino</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MQTT</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Python</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ArduPilot</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">AWS IoT</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ANSYS</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ROS</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">SolidWorks</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">CAD / CAM</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ESP32</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Arduino</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MQTT</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Python</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ArduPilot</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">AWS IoT</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ANSYS</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">ROS</span><span class="marquee-sep">·</span>
+    </div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track reverse">
+      <span class="marquee-item">3D Printing</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Fusion 360</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Raspberry Pi</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">C / C++</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">PCB Design</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Carbon Fibre</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">LoRa / BLE</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MATLAB</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">FEA / CFD</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MSC Adams</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">3D Printing</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Fusion 360</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Raspberry Pi</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">C / C++</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">PCB Design</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Carbon Fibre</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">LoRa / BLE</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MATLAB</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">FEA / CFD</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MSC Adams</span><span class="marquee-sep">·</span>
+    </div>
+  </div>
+  <div class="tech-cta">
+    <a href="#contact" class="btn btn-outline">Discuss your project</a>
+  </div>
+</section>
+
+<!-- CAPABILITIES DARK -->
+<section class="awards" id="about">
+  <div class="awards-inner">
+    <div class="awards-left">
+      <p class="awards-eyebrow">OUR CAPABILITIES</p>
+      <span class="teal">Excellence.</span>
+      <h2>Our minimum bar<br>for every build.</h2>
+      <p>Every project is treated with the same engineering rigour. Research-backed methods, proven toolchains, and a commitment to products that work in the real world.</p>
+      <a href="#projects" class="awards-link">See our projects</a>
+    </div>
+
+    <div class="awards-circles">
+      <div class="circle-stat">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="circ1" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+          <circle cx="100" cy="100" r="78" fill="none" stroke="#0a2a35" stroke-width="1"/>
+          <text font-size="8.5" font-weight="600" fill="#1a4050" letter-spacing="3.8" font-family="Space Grotesk, Arial, sans-serif">
+            <textPath href="#circ1">PROJECTS BUILT · PROJECTS BUILT · PROJECTS BUILT · </textPath>
+          </text>
+        </svg>
+        <div class="circle-center">
+          <span class="circle-num" id="cnum1">0</span>
+          <span class="circle-label">projects<br>delivered</span>
+        </div>
+      </div>
+      <div class="circle-stat ccw">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="circ2" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+          <circle cx="100" cy="100" r="78" fill="none" stroke="#0a2a35" stroke-width="1"/>
+          <text font-size="8.5" font-weight="600" fill="#1a4050" letter-spacing="3.8" font-family="Space Grotesk, Arial, sans-serif">
+            <textPath href="#circ2">RESEARCH FUNDED · RESEARCH FUNDED · RESEARCH FUNDED · </textPath>
+          </text>
+        </svg>
+        <div class="circle-center">
+          <span class="circle-num">
+            <span style="font-size:0.6em;letter-spacing:0;font-weight:700;display:block;line-height:1.2;">AUD</span>
+            <span id="cnum2val">0</span><span style="font-size:0.75em;">k+</span>
+          </span>
+          <span class="circle-label">in research<br>grants</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="awards-grid">
+      <div class="award-item">
+        <div class="award-logo-text">Product Design</div>
+        <div class="award-desc">Full-cycle from concept sketch to production-ready design</div>
+      </div>
+      <div class="award-item">
+        <div class="award-logo-text">IoT and Embedded</div>
+        <div class="award-desc">Sensor networks, firmware and real-time cloud dashboards</div>
+      </div>
+      <div class="award-item">
+        <div class="award-logo-text">UAV Systems</div>
+        <div class="award-desc">AI-driven UAV platforms for monitoring and surveillance</div>
+      </div>
+      <div class="award-item">
+        <div class="award-logo-text">Robotics and AI</div>
+        <div class="award-desc">Optimal control, trajectory planning and intelligent systems</div>
+      </div>
+      <div class="award-item">
+        <div class="award-logo-text">Fabrication</div>
+        <div class="award-desc">CNC, injection moulding, composites and sheet metal</div>
+      </div>
+      <div class="award-item">
+        <div class="award-logo-text">FEA / Simulation</div>
+        <div class="award-desc">Structural, dynamic and thermal analysis for safe designs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY FUTUORA -->
+<section class="wonder">
+  <div class="container">
+    <div class="wonder-top">
+      <h2>No need to wonder.<br>Working with us is wonderful<span style="color:var(--teal);">.</span></h2>
+    </div>
+    <div class="wonder-features">
+      <div class="wonder-feat">
+        <div class="wonder-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <div>
+          <h3>Research-backed engineering</h3>
+          <p>Our founders are active researchers and IEEE members. Every solution is grounded in proven science, not guesswork.</p>
+        </div>
+      </div>
+      <div class="wonder-feat">
+        <div class="wonder-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <div>
+          <h3>End-to-end capability</h3>
+          <p>From first sketch to final product. We handle design, simulation, fabrication, firmware, and deployment in-house.</p>
+        </div>
+      </div>
+      <div class="wonder-feat">
+        <div class="wonder-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <div>
+          <h3>Industry-grade tools</h3>
+          <p>SolidWorks, ANSYS, MATLAB, ROS, ArduPilot. We use professional toolchains for professional results.</p>
+        </div>
+      </div>
+      <div class="wonder-feat">
+        <div class="wonder-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <div>
+          <h3>Fast, transparent delivery</h3>
+          <p>We prototype quickly, communicate clearly, and adapt to your needs. No surprises, no scope creep.</p>
+        </div>
+      </div>
+    </div>
+    <div class="wonder-cta-wrap">
+      <h3>Let's build your product.</h3>
+      <a href="#contact" class="btn btn-teal" style="font-size:0.9rem;padding:12px 28px;">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="container">
+    <div class="projects-header">
+      <h2>Our work.</h2>
+      <p>Real products. Real engineering. Built from the ground up.</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="pics/Vending.png" alt="Futura Food Dispensary Machine">
+          <span class="project-category-bar">Product Design and Fabrication</span>
+          <span class="project-status status-dev">In Development</span>
+        </div>
+        <div class="project-body">
+          <h3>Futura Food Dispensary Machine</h3>
+          <p class="project-tagline">A custom-built commercial smart vending machine, designed and fabricated in-house</p>
+          <p class="project-desc">A large-format smart food and drink vending machine built under Futuora Engineering. Custom galvanized steel cabinet with 7 dispensing trays, smart IoT controller, PAX A50 payment terminal, 10.1 inch touchscreen interface, and a full refrigeration system designed for Sri Lanka's ambient conditions.</p>
+          <div class="project-tags">
+            <span class="project-tag">SolidWorks CAD</span>
+            <span class="project-tag">Sheet Metal</span>
+            <span class="project-tag">Embedded Systems</span>
+            <span class="project-tag">Electronics Design</span>
+            <span class="project-tag">Refrigeration</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img-wrap">
+          <img src="pics/RO.png" alt="Seawater Reverse Osmosis System">
+          <span class="project-category-bar">Mechanical Engineering and Electronics</span>
+          <span class="project-status status-live">Active</span>
+        </div>
+        <div class="project-body">
+          <h3>Seawater Reverse Osmosis System</h3>
+          <p class="project-tagline">A commercial desalination system producing clean freshwater from seawater</p>
+          <p class="project-desc">A commercial seawater desalination unit producing 60 L/h of freshwater. Full SS316 stainless steel construction with ESP32-based automated pressure control and hardware overpressure protection. Designed for coastal deployment in Sri Lanka.</p>
+          <div class="project-tags">
+            <span class="project-tag">Hydraulic Systems</span>
+            <span class="project-tag">Embedded Systems</span>
+            <span class="project-tag">Water Treatment</span>
+            <span class="project-tag">PCB Design</span>
+            <span class="project-tag">Mechanical Design</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="founders" id="team">
+  <div class="container">
+    <div class="founders-header">
+      <h2>Two engineers.<br>One mission.</h2>
+      <p>Futuora is built by engineers who research, design, and fabricate real things for the real world.</p>
+    </div>
+    <div class="founders-grid">
+
+      <div class="founder-card">
+        <div class="founder-photo-wrap">
+          <img src="pics/Bhanuka.jpg" alt="Sachintha Bhanuka Dayawansa">
+          <div class="founder-photo-overlay"></div>
+        </div>
+        <div class="founder-body">
+          <h3>Sachintha Bhanuka Dayawansa</h3>
+          <p class="founder-title">Co-Founder · Lecturer in Mechatronics, Curtin University Colombo</p>
+          <p class="founder-bio">Lecturer and Discipline Lead for Mechanical and Mechatronics Engineering at Curtin University Colombo. Holds an M.Sc. in Electronics and Automation from the University of Moratuwa, specialising in optimal trajectory planning and control of robotic manipulators. Heads the Robotics and Intelligent Systems Research Group at Curtin Colombo. Published in IEEE MERCon, ICRA, and ICMA.</p>
+          <div class="founder-tags">
+            <span class="founder-tag">Robotics</span>
+            <span class="founder-tag">Mechatronics</span>
+            <span class="founder-tag">UAV Systems</span>
+            <span class="founder-tag">Optimal Control</span>
+            <span class="founder-tag">AI Engineering</span>
+            <span class="founder-tag">IEEE RAS</span>
+          </div>
+          <div class="founder-achievements">
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>AUD 18,000 grant: AI-Driven Intelligent UAV System for Infrastructure Monitoring</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>AUD 13,000 grant: AI-Driven Wildfire Risk Prediction and Monitoring</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>Best Oral Presentation, Mechatronics, Robotics and Automation track, ICIET 2023</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>Vice Chair, IEEE Industry Applications Society Sri Lanka Section</span></div>
+          </div>
+          <div class="founder-links" style="margin-top:18px;">
+            <a href="https://www.linkedin.com/in/bhanuka-dayawansa" target="_blank" class="founder-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="founder-card">
+        <div class="founder-photo-wrap">
+          <img src="pics/janitha.png" alt="Janitha Dissanayake">
+          <div class="founder-photo-overlay"></div>
+        </div>
+        <div class="founder-body">
+          <h3>Janitha Dissanayake</h3>
+          <p class="founder-title">Co-Founder · Mechanical Engineer and Industrial Product Designer</p>
+          <p class="founder-bio">Mechanical R and D Engineer and Industrial Product Designer with a passion for building real-world products from concept to scalable manufacturing. Specialises in mechanical design, electro-mechanical integration, and manufacturing optimisation. Previously Lead Mechanical Engineer at Atlas Labs. BSc (Hons) Mechanical Engineering, SLIIT.</p>
+          <div class="founder-tags">
+            <span class="founder-tag">SolidWorks</span>
+            <span class="founder-tag">Product Design</span>
+            <span class="founder-tag">FEA</span>
+            <span class="founder-tag">DFM / DFA</span>
+            <span class="founder-tag">CAE</span>
+            <span class="founder-tag">Manufacturing</span>
+          </div>
+          <div class="founder-achievements">
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>Lead Mechanical Engineer, Horcery Wearable Device at Atlas Labs. Enclosures, injection moulding, CNC, FEA.</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>Chair, IEEE Industry Applications Society Sri Lanka Chapter (2024 to 2026)</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>Formula Student Engineering Competition UK. CAD, FEA, CAM, Prototyping, Testing.</span></div>
+            <div class="founder-achievement"><span class="achievement-dot"></span><span>IIT Madras International Entrepreneurship Training Programme</span></div>
+          </div>
+          <div class="founder-links" style="margin-top:18px;">
+            <a href="https://www.linkedin.com/in/janitha-dissanayake" target="_blank" class="founder-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-inner">
+    <div class="process-left">
+      <h2>Three steps.<br>From your idea<br>to a real product.</h2>
+      <div class="process-photo" style="margin-top:32px;">
+        <img src="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?w=400&auto=format&fit=crop&q=80" alt="Engineering workspace">
+      </div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num-badge">1</div>
+        <div>
+          <p class="step-eyebrow">Step 1</p>
+          <h3>Share your idea.</h3>
+          <p>Tell us what you want to build. We discuss your requirements, constraints, budget, and timeline to understand exactly what success looks like for you.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num-badge">2</div>
+        <div>
+          <p class="step-eyebrow">Step 2</p>
+          <h3>We design and prototype.</h3>
+          <p>In days, not months. We produce CAD models, prototypes, and FEA results. You review, we iterate, until the design is validated and ready.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num-badge">3</div>
+        <div>
+          <p class="step-eyebrow">Step 3</p>
+          <h3>We build and deliver.</h3>
+          <p>Once the design is validated, we move to fabrication and production. We track quality at every step and deliver a product ready for the real world.</p>
+        </div>
+      </div>
+      <div class="process-cta">
+        <a href="#contact" class="btn btn-teal" style="font-size:0.9rem;padding:12px 28px;">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-band" id="contact">
+  <div class="container cta-band-inner">
+    <h2>Ready to bring your idea to life?</h2>
+    <p>Talk to Bhanuka or Janitha. We will have a plan for your product within 48 hours.</p>
+    <a href="mailto:hello@futuora.com" class="btn btn-teal" style="font-size:1rem;padding:16px 36px;">Get in Touch</a>
+    <div class="cta-contact-row">
+      <a href="tel:+94711068057" class="cta-contact-item" style="color:#4a8090;text-decoration:none;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00C8D4" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.54 5.54l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +94 71 106 8057
+      </a>
+      <span class="cta-contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00C8D4" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        hello@futuora.com
+      </span>
+      <span class="cta-contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00C8D4" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        futuora.com
+      </span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <img src="pics/Logo.png" alt="Futuora">
+          <span class="footer-logo-name">Futuora</span>
+        </div>
+        <p>Engineering and product innovation company. Digitize. Innovate. Create. Est. 2024, Sri Lanka.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Product Design and Dev</a></li>
+          <li><a href="#services">Manufacturing and Fabrication</a></li>
+          <li><a href="#services">IoT Development</a></li>
+          <li><a href="#services">UAV Engineering</a></li>
+          <li><a href="#services">Rapid Prototyping</a></li>
+          <li><a href="#services">Automation and Robotics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Futuora</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="#projects">Our Work</a></li>
+          <li><a href="#technologies">Technologies</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+94711068057">+94 71 106 8057</a></li>
+          <li><a href="mailto:hello@futuora.com">hello@futuora.com</a></li>
+          <li><a href="https://futuora.com">futuora.com</a></li>
+          <li><a href="#team">Bhanuka Dayawansa</a></li>
+          <li><a href="#team">Janitha Dissanayake</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Futuora 2024 to 2026. All rights reserved. Sri Lanka.</p>
+      <div class="social-links">
+        <a href="#" title="LinkedIn">Li</a>
+        <a href="#" title="Twitter">Tw</a>
+        <a href="#" title="Instagram">In</a>
+        <a href="#" title="GitHub">Gh</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const words = ['Product Designers', 'IoT Engineers', 'Fabrication Team', 'UAV Specialists', 'Robotics Experts', 'Mechatronics Engineers'];
+  let idx = 0;
+  const el = document.getElementById('rotating-text');
+  function typeWord(word) {
+    el.textContent = '';
+    let i = 0;
+    const t = setInterval(() => {
+      el.textContent += word[i++];
+      if (i >= word.length) { clearInterval(t); setTimeout(eraseWord, 2400); }
+    }, 65);
+  }
+  function eraseWord() {
+    const t = setInterval(() => {
+      el.textContent = el.textContent.slice(0, -1);
+      if (!el.textContent.length) { clearInterval(t); idx = (idx + 1) % words.length; setTimeout(() => typeWord(words[idx]), 320); }
+    }, 38);
+  }
+  typeWord(words[0]);
+
+  function countUp(el, target, duration) {
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  let counted = false;
+  function checkCount() {
+    if (counted) return;
+    const section = document.querySelector('.awards');
+    if (section && section.getBoundingClientRect().top < window.innerHeight * 0.85) {
+      counted = true;
+      countUp(document.getElementById('cnum1'), 12, 1400);
+      countUp(document.getElementById('cnum2val'), 36, 1400);
+    }
+  }
+  window.addEventListener('scroll', checkCount, { passive: true });
+  checkCount();
+
+  const nav = document.getElementById('nav');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionIds = ['services','technologies','about','projects','team','contact'];
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    let current = '';
+    sectionIds.forEach(id => {
+      const s = document.getElementById(id);
+      if (s && s.getBoundingClientRect().top <= 80) current = id;
+    });
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href').replace('#', '');
+      a.classList.toggle('active', href === current);
+    });
+  }, { passive: true });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

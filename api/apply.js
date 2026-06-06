@@ -16,22 +16,21 @@ module.exports = async function handler(req, res) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const recipient = process.env.RECIPIENT_EMAIL || 'amithnalh@outlook.com';
+    const recipients = process.env.RECIPIENT_EMAIL
+      ? [process.env.RECIPIENT_EMAIL]
+      : ['amithnalh@outlook.com', 'janitha@futuora.com'];
 
     const attachments = [];
     if (cv && cv.data && cv.name) {
-      const buf = Buffer.from(cv.data, 'base64');
-      if (buf.length > 4 * 1024 * 1024) {
-        return res.status(400).json({ error: 'CV file is too large. Max 4MB.' });
-      }
-      attachments.push({ filename: cv.name, content: buf });
+      // Pass base64 string directly — Resend accepts it without Buffer conversion
+      attachments.push({ filename: cv.name, content: cv.data });
     }
 
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
     await resend.emails.send({
       from: 'Futuora Careers <onboarding@resend.dev>',
-      to: recipient,
+      to: recipients,
       reply_to: email,
       subject: `Application: ${role} — ${name}`,
       html: `

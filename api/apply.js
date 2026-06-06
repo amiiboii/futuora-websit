@@ -29,7 +29,7 @@ module.exports = async function handler(req, res) {
 
     await resend.emails.send({
       from: 'Futuora Careers <onboarding@resend.dev>',
-      to: ['amithnalh@outlook.com', 'janitha@futuora.com'],
+      to: ['amithnalh@outlook.com'],
       reply_to: email,
       subject: `Application: ${role} — ${name}`,
       attachments,

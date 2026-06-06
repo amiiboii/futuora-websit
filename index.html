@@ -192,6 +192,17 @@
   .project-desc { font-size: 0.86rem; color: var(--gray-text); line-height: 1.7; margin-bottom: 18px; flex: 1; }
   .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .project-tag { padding: 4px 11px; font-size: 0.68rem; font-weight: 600; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 20px; color: var(--black); }
+  .card-preorder-banner { display: flex; align-items: center; gap: 8px; background: rgba(0,200,212,0.07); border: 1px solid rgba(0,200,212,0.22); border-radius: 8px; padding: 9px 12px; margin-bottom: 14px; }
+  .card-preorder-banner span { font-size: 0.75rem; font-weight: 700; color: var(--teal); }
+  .card-mini-specs { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 0.78rem; }
+  .card-mini-specs tr { border-bottom: 1px solid var(--gray-mid); }
+  .card-mini-specs tr:last-child { border-bottom: none; }
+  .card-mini-specs td { padding: 6px 0; line-height: 1.35; }
+  .card-mini-specs td:first-child { color: var(--gray-text); font-weight: 600; width: 52%; }
+  .card-mini-specs td:last-child { color: var(--black); font-weight: 600; }
+  .card-split-logo { height: 46px; width: auto; display: block; margin-bottom: 12px; }
+  [data-theme="dark"] .card-mini-specs tr { border-bottom-color: #0a2a35; }
+  [data-theme="dark"] .card-mini-specs td:last-child { color: #c8e4ec; }
 
 
   /* PROJECT MODALS */
@@ -226,7 +237,7 @@
   .proj-modal-close:hover { background: var(--gray-mid); }
   .proj-modal-logo-hero { background: var(--dark-bg); border-radius: 20px 20px 0 0; padding: 40px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; position: relative; overflow: hidden; }
   .proj-modal-logo-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,212,0.1) 0%, transparent 70%); pointer-events: none; }
-  .proj-modal-logo-hero img { height: 90px; width: auto; position: relative; z-index: 1; }
+  .proj-modal-logo-hero img { height: 130px; width: auto; position: relative; z-index: 1; }
   .proj-modal-logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
   .proj-modal-logo-row img { height: 44px; width: auto; }
   .proj-modal-title { font-size: 1.55rem; font-weight: 800; color: var(--black); letter-spacing: -0.035em; line-height: 1.15; margin-bottom: 10px; }
@@ -1003,12 +1014,18 @@
           <span class="project-status status-live">Pre-order Open</span>
         </div>
         <div class="project-body">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <img src="pics/Split water logo.png" alt="Split Water" style="height:28px;width:auto;">
+          <img src="pics/Split water logo.png" alt="Split Water" class="card-split-logo">
+          <div class="card-preorder-banner">
+            <span class="preorder-dot"></span>
+            <span>Pre-orders now open — click to enquire</span>
           </div>
-          <h3>Split Water</h3>
-          <p class="project-tagline">Seawater desalination system, available for pre-order</p>
-          <p class="project-desc">60 L/h freshwater output from seawater. Full SS316 construction, automated pressure control, hardware overpressure protection. Designed for coastal and off-grid deployment.</p>
+          <table class="card-mini-specs">
+            <tr><td>Freshwater Output</td><td>60 L/h</td></tr>
+            <tr><td>Daily Production</td><td>~1,440 L/day</td></tr>
+            <tr><td>Feed Source</td><td>Seawater</td></tr>
+            <tr><td>Construction</td><td>SS316 throughout</td></tr>
+            <tr><td>Operating Pressure</td><td>~60 bar</td></tr>
+          </table>
           <div class="project-tags">
             <span class="project-tag">Hydraulic Systems</span>
             <span class="project-tag">Embedded Systems</span>

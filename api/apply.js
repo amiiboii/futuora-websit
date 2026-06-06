@@ -19,20 +19,22 @@ module.exports = async function handler(req, res) {
 
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-    const attachments = [];
+    const mailPayload = {
+      from: 'Futuora Careers <onboarding@resend.dev>',
+      to: 'amithnalh@outlook.com',
+      reply_to: email,
+      subject: `Application: ${role} — ${name}`,
+    };
+
     if (cv && cv.data && cv.name) {
-      attachments.push({
+      mailPayload.attachments = [{
         filename: cv.name,
         content: Buffer.from(cv.data, 'base64'),
-      });
+      }];
     }
 
     await resend.emails.send({
-      from: 'Futuora Careers <onboarding@resend.dev>',
-      to: ['amithnalh@outlook.com'],
-      reply_to: email,
-      subject: `Application: ${role} — ${name}`,
-      attachments,
+      ...mailPayload,
       html: `
 <!DOCTYPE html>
 <html>
@@ -80,7 +82,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ success: true });
   } catch (err) {
-    console.error('Apply API error:', err);
-    return res.status(500).json({ error: err.message || 'Failed to send. Please try again.' });
+    console.error('Apply API error:', JSON.stringify(err));
+    return res.status(500).json({ error: err.message || JSON.stringify(err) || 'Unknown error' });
   }
 };

@@ -208,6 +208,66 @@
   .process-step p  { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
   .process-cta { margin-top: 28px; }
 
+  /* PRICING */
+  .pricing { background: var(--gray-light); padding: 80px 0; }
+  .pricing-header { text-align: center; max-width: 560px; margin: 0 auto 48px; }
+  .pricing-header h2 { margin-bottom: 12px; }
+  .pricing-header p { color: var(--gray-text); font-size: 0.95rem; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+  .pricing-card {
+    background: var(--white); border: 1px solid var(--gray-mid); border-radius: 16px;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  .pricing-card:hover { box-shadow: 0 12px 40px rgba(0,100,120,0.1); border-color: rgba(0,200,212,0.3); }
+  .pricing-card.popular {
+    border: 2px solid var(--teal);
+    box-shadow: 0 8px 32px rgba(0,200,212,0.15);
+    transform: scale(1.02);
+  }
+  .pricing-card.popular:hover { box-shadow: 0 16px 48px rgba(0,200,212,0.22); }
+  .pricing-img {
+    position: relative; height: 160px; overflow: hidden; background: var(--dark-bg);
+  }
+  .pricing-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .pricing-card:hover .pricing-img img { transform: scale(1.05); }
+  .pricing-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(3,30,44,0.75) 0%, rgba(3,30,44,0.2) 60%, transparent 100%);
+  }
+  .pricing-img-label {
+    position: absolute; bottom: 14px; left: 16px;
+    font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.06em;
+  }
+  .pricing-img-title {
+    position: absolute; bottom: 34px; left: 16px; right: 16px;
+    font-size: 1.4rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1.1;
+  }
+  .popular-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--teal); color: var(--dark-bg); font-size: 0.68rem; font-weight: 800;
+    padding: 4px 12px; border-radius: 20px; letter-spacing: 0.04em;
+  }
+  .pricing-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .pricing-desc { font-size: 0.84rem; color: var(--gray-text); line-height: 1.65; margin-bottom: 20px; }
+  .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; flex: 1; }
+  .pricing-feat { display: flex; gap: 10px; align-items: flex-start; font-size: 0.84rem; color: var(--black); line-height: 1.4; }
+  .pricing-check { flex-shrink: 0; width: 18px; height: 18px; background: rgba(0,200,212,0.12); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .pricing-check svg { width: 10px; height: 10px; }
+  .pricing-cta {
+    display: block; width: 100%; padding: 14px; text-align: center;
+    font-size: 0.9rem; font-weight: 700; font-family: var(--font);
+    border-radius: 8px; cursor: pointer; transition: all 0.2s; border: none;
+    background: var(--black); color: var(--white); letter-spacing: 0.02em;
+  }
+  .pricing-cta:hover { background: #0a4a63; }
+  .pricing-card.popular .pricing-cta { background: var(--teal); color: var(--dark-bg); }
+  .pricing-card.popular .pricing-cta:hover { background: #00b0bb; }
+  @media (max-width: 900px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .pricing-card.popular { transform: none; }
+  }
+
   /* CTA BAND */
   .cta-band { background: var(--dark-bg); color: var(--white); padding: 80px 0; text-align: center; position: relative; overflow: hidden; }
   .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 110%, rgba(0,200,212,0.15) 0%, transparent 68%); }
@@ -653,8 +713,8 @@
 <section class="founders" id="team">
   <div class="container">
     <div class="founders-header">
-      <h2>Two engineers.<br>One mission.</h2>
-      <p>Futuora is built by engineers who research, design, and fabricate real things for the real world.</p>
+      <h2>Meet the team.</h2>
+      <p>The engineers behind every design, build, and delivery at Futuora.</p>
     </div>
     <div class="founders-grid">
 
@@ -763,6 +823,80 @@
       <div class="process-cta">
         <a href="#contact" class="btn btn-teal" style="font-size:0.9rem;padding:12px 28px;">Get in Touch</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <h2>How we work with you.</h2>
+      <p>Every engagement is different. Pick the model that fits your project and budget.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-img">
+          <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&auto=format&fit=crop&q=80" alt="Milestone-based">
+          <div class="pricing-img-overlay"></div>
+          <p class="pricing-img-label">Best for custom projects</p>
+          <p class="pricing-img-title">Milestone-based</p>
+        </div>
+        <div class="pricing-body">
+          <p class="pricing-desc">We break the project into phases: Concept, Prototype, Testing, Final Product. You pay per milestone so risk stays low and progress stays visible.</p>
+          <div class="pricing-features">
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Phased project delivery</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Payment tied to milestones</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Risk mitigation for both sides</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Clear project progression</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Flexible scope adjustments</div>
+          </div>
+          <a href="#contact" class="pricing-cta">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pricing-card popular">
+        <div class="pricing-img">
+          <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=80" alt="Monthly retainer">
+          <div class="pricing-img-overlay"></div>
+          <span class="popular-badge">Popular</span>
+          <p class="pricing-img-label">Best for ongoing R&amp;D</p>
+          <p class="pricing-img-title">Monthly retainer</p>
+        </div>
+        <div class="pricing-body">
+          <p class="pricing-desc">A fixed monthly engagement for teams that need continuous engineering support. Great for R&amp;D, product iterations, and long-term build cycles.</p>
+          <div class="pricing-features">
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Fixed monthly investment</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Ongoing R&amp;D support</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Flexible scope management</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Continuous iteration</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Priority support access</div>
+          </div>
+          <a href="#contact" class="pricing-cta">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-img">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&auto=format&fit=crop&q=80" alt="Fixed-price packages">
+          <div class="pricing-img-overlay"></div>
+          <p class="pricing-img-label">Best for MVPs and startups</p>
+          <p class="pricing-img-title">Fixed-price packages</p>
+        </div>
+        <div class="pricing-body">
+          <p class="pricing-desc">Predefined scopes at a set price. Know exactly what you're getting and what it costs before we start.</p>
+          <div class="pricing-features">
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> MVP package (8 to 10 weeks)</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Prototype package (6 weeks)</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> AI / IoT pilot package</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Predictable pricing</div>
+            <div class="pricing-feat"><span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" stroke="#00C8D4" stroke-width="2"><polyline points="1.5,5 4,7.5 8.5,2"/></svg></span> Fast project kick-off</div>
+          </div>
+          <a href="#contact" class="pricing-cta">Get Started</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>

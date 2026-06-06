@@ -561,17 +561,10 @@
       <label>Why are you a good fit?</label>
       <textarea id="f-message" placeholder="Tell us about your background and why you are interested in this role..."></textarea>
     </div>
-    <div class="form-group">
-      <label>Upload CV / Resume</label>
-      <input type="file" id="f-cv" accept=".pdf,.doc,.docx">
-      <p class="file-hint">PDF, DOC or DOCX — max 4 MB</p>
+    <div class="form-note">
+      Send your email to <strong>hello@futuora.com</strong> with your CV attached. Clicking below will pre-fill the email for you.
     </div>
-    <div class="form-success" id="form-success">
-      <div class="form-success-icon">&#10003;</div>
-      <h3>Application sent!</h3>
-      <p>We have received your application and will be in touch soon.</p>
-    </div>
-    <button class="form-submit" id="form-submit-btn" onclick="submitApplication()">Submit Application</button>
+    <button class="form-submit" id="form-submit-btn" onclick="submitApplication()">Open Email to Apply</button>
   </div>
 </div>
 
@@ -873,61 +866,24 @@
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeJD(); closeModal(); } });
 
-  async function submitApplication() {
+  function submitApplication() {
     const name = document.getElementById('f-name').value.trim();
     const email = document.getElementById('f-email').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
     const message = document.getElementById('f-message').value.trim();
-    const cvInput = document.getElementById('f-cv');
-    const cvFile = cvInput.files[0];
-
     if (!name || !email) { alert('Please enter your name and email.'); return; }
-    if (cvFile && cvFile.size > 4 * 1024 * 1024) { alert('CV file is too large. Please upload a file under 4 MB.'); return; }
-
-    const btn = document.getElementById('form-submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    try {
-      let cv = null;
-      if (cvFile) {
-        cv = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = (e) => resolve({ name: cvFile.name, type: cvFile.type, data: e.target.result.split(',')[1] });
-          reader.readAsDataURL(cvFile);
-        });
-      }
-
-      const res = await fetch('/api/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, role: currentJob, message, cv })
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Server error');
-      }
-
-      document.getElementById('form-success').style.display = 'block';
-      btn.style.display = 'none';
-      setTimeout(() => {
-        document.getElementById('f-name').value = '';
-        document.getElementById('f-email').value = '';
-        document.getElementById('f-phone').value = '';
-        document.getElementById('f-message').value = '';
-        cvInput.value = '';
-        document.getElementById('form-success').style.display = 'none';
-        btn.style.display = '';
-        btn.disabled = false;
-        btn.textContent = 'Submit Application';
-        closeModal();
-      }, 3000);
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = 'Submit Application';
-      alert('Something went wrong: ' + err.message + '\n\nPlease email us directly at hello@futuora.com');
-    }
+    const subject = encodeURIComponent('Application: ' + currentJob);
+    const body = encodeURIComponent(
+      'Hi Futuora team,\n\n' +
+      'I would like to apply for the ' + currentJob + ' role.\n\n' +
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || '—') + '\n\n' +
+      (message ? 'About me:\n' + message + '\n\n' : '') +
+      'Please find my CV attached.\n\nBest regards,\n' + name
+    );
+    window.open('mailto:hello@futuora.com?subject=' + subject + '&body=' + body);
+    closeModal();
   }
 </script>
 </body>

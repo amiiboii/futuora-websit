@@ -91,9 +91,17 @@
     }
     .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); }
     .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group input[type="file"] { padding: 8px 12px; cursor: pointer; }
+    .file-hint { font-size: 0.72rem; color: var(--gray-text); margin-top: 5px; }
     .form-note { font-size: 0.75rem; color: var(--gray-text); background: var(--gray-light); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.55; }
     .form-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--dark-bg); font-family: inherit; font-size: 0.92rem; font-weight: 700; border: none; border-radius: 9px; cursor: pointer; transition: background 0.15s; }
-    .form-submit:hover { background: #00b0bb; }
+    .form-submit:hover:not(:disabled) { background: #00b0bb; }
+    .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+    .form-success { display: none; text-align: center; padding: 24px 0 8px; }
+    .form-success-icon { font-size: 2.4rem; margin-bottom: 10px; }
+    .form-success h3 { font-size: 1.1rem; font-weight: 800; color: var(--black); margin-bottom: 6px; }
+    .form-success p { font-size: 0.84rem; color: var(--gray-text); }
+    [data-theme="dark"] .form-success h3 { color: #c8e4ec; }
 
     /* CTA BANNER */
     .open-apps { background: var(--gray-light); padding: 64px 0; text-align: center; }
@@ -553,10 +561,17 @@
       <label>Why are you a good fit?</label>
       <textarea id="f-message" placeholder="Tell us about your background and why you are interested in this role..."></textarea>
     </div>
-    <div class="form-note">
-      Clicking submit will open your email client with your details pre-filled. Please attach your CV before sending.
+    <div class="form-group">
+      <label>Upload CV / Resume</label>
+      <input type="file" id="f-cv" accept=".pdf,.doc,.docx">
+      <p class="file-hint">PDF, DOC or DOCX — max 4 MB</p>
     </div>
-    <button class="form-submit" onclick="submitApplication()">Submit Application</button>
+    <div class="form-success" id="form-success">
+      <div class="form-success-icon">&#10003;</div>
+      <h3>Application sent!</h3>
+      <p>We have received your application and will be in touch soon.</p>
+    </div>
+    <button class="form-submit" id="form-submit-btn" onclick="submitApplication()">Submit Application</button>
   </div>
 </div>
 
@@ -858,23 +873,65 @@
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeJD(); closeModal(); } });
 
-  function submitApplication() {
+  async function submitApplication() {
     const name = document.getElementById('f-name').value.trim();
     const email = document.getElementById('f-email').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
     const message = document.getElementById('f-message').value.trim();
+    const cvInput = document.getElementById('f-cv');
+    const cvFile = cvInput.files[0];
+
     if (!name || !email) { alert('Please enter your name and email.'); return; }
-    const subject = encodeURIComponent('Application: ' + currentJob);
-    const body = encodeURIComponent(
-      'Position: ' + currentJob + '\n\n' +
-      'Name: ' + name + '\n' +
-      'Email: ' + email + '\n' +
-      'Phone: ' + phone + '\n\n' +
-      'Message:\n' + message + '\n\n' +
-      '--- Please attach your CV to this email before sending ---'
-    );
-    window.location.href = 'mailto:hello@futuora.com?subject=' + subject + '&body=' + body;
-    closeModal();
+    if (cvFile && cvFile.size > 4 * 1024 * 1024) { alert('CV file is too large. Please upload a file under 4 MB.'); return; }
+
+    const btn = document.getElementById('form-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    let cv = null;
+    if (cvFile) {
+      cv = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve({
+          name: cvFile.name,
+          type: cvFile.type,
+          data: e.target.result.split(',')[1]
+        });
+        reader.readAsDataURL(cvFile);
+      });
+    }
+
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, role: currentJob, message, cv })
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Server error');
+      }
+
+      document.getElementById('form-success').style.display = 'block';
+      btn.style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-phone').value = '';
+        document.getElementById('f-message').value = '';
+        cvInput.value = '';
+        document.getElementById('form-success').style.display = 'none';
+        btn.style.display = '';
+        btn.disabled = false;
+        btn.textContent = 'Submit Application';
+        closeModal();
+      }, 3000);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application';
+      alert('Something went wrong: ' + err.message + '\n\nPlease email us directly at hello@futuora.com');
+    }
   }
 </script>
 </body>

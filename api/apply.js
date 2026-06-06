@@ -1,5 +1,4 @@
 const { Resend } = require('resend');
-const { del } = require('@vercel/blob');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,7 +9,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { name, email, phone, role, message, blobUrl, fileName } = req.body;
+    const { name, email, phone, role, message, cv } = req.body;
 
     if (!name || !email || !role) {
       return res.status(400).json({ error: 'Name, email and role are required.' });
@@ -18,60 +17,33 @@ module.exports = async function handler(req, res) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    const hasCv = !!(cv && cv.data && cv.name);
 
-    // Fetch CV from Vercel Blob and attach
     const mailPayload = {
       from: 'Futuora Careers <onboarding@resend.dev>',
       to: 'amithnalh@outlook.com',
       reply_to: email,
       subject: `Application: ${role} — ${name}`,
-    };
-
-    const hasCv = !!(blobUrl && fileName);
-
-    if (hasCv) {
-      const fileRes = await fetch(blobUrl);
-      if (fileRes.ok) {
-        const fileBuffer = Buffer.from(await fileRes.arrayBuffer());
-        mailPayload.attachments = [{ filename: fileName, content: fileBuffer }];
-      }
-    }
-
-    mailPayload.html = `
+      html: `
 <!DOCTYPE html>
 <html>
 <body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f7f8;margin:0;padding:24px;">
-  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(6,51,71,0.08);">
+  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;">
     <div style="background:#031e2c;padding:28px 32px 22px;">
       <p style="margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#00C8D4;">Futuora Engineering — Careers</p>
-      <h1 style="margin:8px 0 0;font-size:22px;font-weight:800;color:#c8e4ec;letter-spacing:-0.03em;">New Application Received</h1>
+      <h1 style="margin:8px 0 0;font-size:22px;font-weight:800;color:#c8e4ec;">New Application Received</h1>
     </div>
     <div style="padding:28px 32px;">
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        <tr style="border-bottom:1px solid #f0f7f8;">
-          <td style="padding:10px 0;font-weight:700;color:#4a7080;width:130px;">Role</td>
-          <td style="padding:10px 0;color:#063347;font-weight:600;">${safeText(role)}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f7f8;">
-          <td style="padding:10px 0;font-weight:700;color:#4a7080;">Name</td>
-          <td style="padding:10px 0;color:#063347;">${safeText(name)}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f7f8;">
-          <td style="padding:10px 0;font-weight:700;color:#4a7080;">Email</td>
-          <td style="padding:10px 0;"><a href="mailto:${email}" style="color:#00C8D4;">${safeText(email)}</a></td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f7f8;">
-          <td style="padding:10px 0;font-weight:700;color:#4a7080;">Phone</td>
-          <td style="padding:10px 0;color:#063347;">${safeText(phone) || '—'}</td>
-        </tr>
-        <tr>
-          <td style="padding:10px 0;font-weight:700;color:#4a7080;vertical-align:top;">Cover Note</td>
-          <td style="padding:10px 0;color:#063347;line-height:1.6;">${safeText(message) || '—'}</td>
-        </tr>
+        <tr><td style="padding:8px 0;font-weight:700;color:#4a7080;width:130px;">Role</td><td style="padding:8px 0;color:#063347;font-weight:600;">${safeText(role)}</td></tr>
+        <tr><td style="padding:8px 0;font-weight:700;color:#4a7080;">Name</td><td style="padding:8px 0;color:#063347;">${safeText(name)}</td></tr>
+        <tr><td style="padding:8px 0;font-weight:700;color:#4a7080;">Email</td><td style="padding:8px 0;"><a href="mailto:${email}" style="color:#00C8D4;">${safeText(email)}</a></td></tr>
+        <tr><td style="padding:8px 0;font-weight:700;color:#4a7080;">Phone</td><td style="padding:8px 0;color:#063347;">${safeText(phone) || '—'}</td></tr>
+        <tr><td style="padding:8px 0;font-weight:700;color:#4a7080;vertical-align:top;">Cover Note</td><td style="padding:8px 0;color:#063347;line-height:1.6;">${safeText(message) || '—'}</td></tr>
       </table>
       ${hasCv
-        ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(fileName)}</div>`
-        : `<div style="margin-top:20px;padding:12px 16px;background:#fff8f0;border-radius:8px;font-size:13px;color:#a06030;">No CV attached.</div>`
+        ? `<div style="margin-top:16px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(cv.name)}</div>`
+        : `<div style="margin-top:16px;padding:12px 16px;background:#fff8f0;border-radius:8px;font-size:13px;color:#a06030;">No CV attached.</div>`
       }
     </div>
     <div style="padding:16px 32px 24px;border-top:1px solid #f0f7f8;">
@@ -79,18 +51,18 @@ module.exports = async function handler(req, res) {
     </div>
   </div>
 </body>
-</html>`;
+</html>`,
+    };
 
-    await resend.emails.send(mailPayload);
-
-    // Delete from Blob immediately after email sent
-    if (blobUrl) {
-      await del(blobUrl).catch(err => console.error('Blob delete failed:', err));
+    if (hasCv) {
+      mailPayload.attachments = [{ filename: cv.name, content: Buffer.from(cv.data, 'base64') }];
     }
 
+    await resend.emails.send(mailPayload);
     return res.status(200).json({ success: true });
+
   } catch (err) {
-    console.error('Apply API error:', err);
-    return res.status(500).json({ error: err.message || 'Failed to send. Please try again.' });
+    console.error('Apply error:', err);
+    return res.status(500).json({ error: err.message || 'Failed to send.' });
   }
 };

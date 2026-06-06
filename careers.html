@@ -882,37 +882,26 @@
     const cvFile = cvInput.files[0];
 
     if (!name || !email) { alert('Please enter your name and email.'); return; }
-    if (cvFile && cvFile.size > 5 * 1024 * 1024) { alert('CV file is too large. Please upload a file under 5 MB.'); return; }
+    if (cvFile && cvFile.size > 4 * 1024 * 1024) { alert('CV file is too large. Please upload a file under 4 MB.'); return; }
 
     const btn = document.getElementById('form-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
     try {
-      let blobUrl = null;
-      let fileName = null;
-
+      let cv = null;
       if (cvFile) {
-        btn.textContent = 'Uploading CV…';
-        const uploadRes = await fetch(`/api/upload-cv?filename=${encodeURIComponent(cvFile.name)}`, {
-          method: 'POST',
-          body: cvFile,
-          headers: { 'Content-Type': cvFile.type || 'application/octet-stream' },
+        cv = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve({ name: cvFile.name, type: cvFile.type, data: e.target.result.split(',')[1] });
+          reader.readAsDataURL(cvFile);
         });
-        if (!uploadRes.ok) {
-          const d = await uploadRes.json().catch(() => ({}));
-          throw new Error(d.error || 'CV upload failed');
-        }
-        const uploaded = await uploadRes.json();
-        blobUrl = uploaded.url;
-        fileName = cvFile.name;
-        btn.textContent = 'Sending…';
       }
 
       const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, role: currentJob, message, blobUrl, fileName })
+        body: JSON.stringify({ name, email, phone, role: currentJob, message, cv })
       });
 
       if (!res.ok) {

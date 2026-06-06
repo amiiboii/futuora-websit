@@ -1,4 +1,4 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,24 +15,31 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Name, email and role are required.' });
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const recipients = process.env.RECIPIENT_EMAIL
-      ? [process.env.RECIPIENT_EMAIL]
-      : ['amithnalh@outlook.com', 'janitha@futuora.com'];
-
-    const attachments = [];
-    if (cv && cv.data && cv.name) {
-      // Pass base64 string directly — Resend accepts it without Buffer conversion
-      attachments.push({ filename: cv.name, content: cv.data });
-    }
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS,
+      },
+    });
 
     const safeText = (s) => (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-    await resend.emails.send({
-      from: 'Futuora Careers <onboarding@resend.dev>',
-      to: recipients,
-      reply_to: email,
+    const attachments = [];
+    if (cv && cv.data && cv.name) {
+      attachments.push({
+        filename: cv.name,
+        content: Buffer.from(cv.data, 'base64'),
+        contentType: cv.type || 'application/octet-stream',
+      });
+    }
+
+    await transporter.sendMail({
+      from: `"Futuora Careers" <${process.env.GMAIL_USER}>`,
+      to: ['amithnalh@outlook.com', 'janitha@futuora.com'],
+      replyTo: email,
       subject: `Application: ${role} — ${name}`,
+      attachments,
       html: `
 <!DOCTYPE html>
 <html>
@@ -66,14 +73,12 @@ module.exports = async function handler(req, res) {
         </tr>
       </table>
       ${attachments.length > 0
-        ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;">
-             <strong style="color:#00C8D4;">CV attached</strong> — ${safeText(cv.name)}
-           </div>`
+        ? `<div style="margin-top:20px;padding:12px 16px;background:#f0f7f8;border-radius:8px;font-size:13px;color:#063347;"><strong style="color:#00C8D4;">CV attached</strong> — ${safeText(cv.name)}</div>`
         : `<div style="margin-top:20px;padding:12px 16px;background:#fff8f0;border-radius:8px;font-size:13px;color:#a06030;">No CV attached.</div>`
       }
     </div>
     <div style="padding:16px 32px 24px;border-top:1px solid #f0f7f8;">
-      <p style="margin:0;font-size:12px;color:#4a7080;">Reply to this email to respond directly to the applicant.</p>
+      <p style="margin:0;font-size:12px;color:#4a7080;">Hit reply to respond directly to the applicant.</p>
     </div>
   </div>
 </body>

@@ -121,9 +121,23 @@
     .open-apps p { color: var(--gray-text); font-size: 0.95rem; max-width: 480px; margin: 0 auto 28px; }
 
     /* FOOTER */
-    .footer-mini { background: var(--dark-bg); padding: 28px 0; text-align: center; }
-    .footer-mini p { font-size: 0.78rem; color: #2a5060; }
-    .footer-mini a { color: var(--teal); }
+    .footer { background: #020f17; color: var(--white); padding: 64px 0 32px; }
+    .footer-top { display: grid; grid-template-columns: 220px 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 0.82rem; color: #1a4050; margin-top: 12px; line-height: 1.7; }
+    .footer-logo-wrap { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-wrap img { height: 32px; width: auto; }
+    .footer-logo-name { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: white; }
+    .footer-col h4 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #1a4050; margin-bottom: 16px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .footer-col ul li a { font-size: 0.84rem; color: #2a5060; transition: color 0.15s; text-decoration: none; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid #0a2030; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.77rem; color: #1a4050; }
+    .social-links { display: flex; gap: 12px; }
+    .social-links a { font-size: 0.75rem; font-weight: 700; color: #1a4050; transition: color 0.15s; }
+    .social-links a:hover { color: var(--white); }
+    @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
+    @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; gap: 24px; } .footer-col-hide { display: none; } .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; } }
 
     /* JD MODAL */
     .jd-overlay { position: fixed; inset: 0; background: rgba(3,30,44,0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 900; opacity: 0; pointer-events: none; transition: opacity 0.25s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -369,9 +383,58 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="footer-mini">
+<footer class="footer">
   <div class="container">
-    <p>Futuora Engineering &copy; 2025 &nbsp;·&nbsp; <a href="mailto:hello@futuora.com">hello@futuora.com</a> &nbsp;·&nbsp; <a href="index.html">Back to main site</a></p>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <img src="pics/Logo.png" alt="Futuora">
+          <span class="footer-logo-name">Futuora</span>
+        </div>
+        <p>Engineering and product innovation company. Digitize. Innovate. Create. Est. 2024, Sri Lanka.</p>
+      </div>
+      <div class="footer-col footer-col-hide">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#services">Product Design and Dev</a></li>
+          <li><a href="index.html#services">Manufacturing and Fabrication</a></li>
+          <li><a href="index.html#services">IoT Development</a></li>
+          <li><a href="index.html#services">UAV Engineering</a></li>
+          <li><a href="index.html#services">Rapid Prototyping</a></li>
+          <li><a href="index.html#services">Automation and Robotics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-hide">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#about">About Futuora</a></li>
+          <li><a href="index.html#team">Our Team</a></li>
+          <li><a href="index.html#projects">Our Work</a></li>
+          <li><a href="index.html#technologies">Technologies</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+94772775330">+94 77 2 775 330</a></li>
+          <li><a href="mailto:hello@futuora.com">hello@futuora.com</a></li>
+          <li><a href="https://futuora.com">futuora.com</a></li>
+          <li><a href="index.html#team">Bhanuka Dayawansa</a></li>
+          <li><a href="index.html#team">Janitha Dissanayake</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Futuora 2024 to 2026. All rights reserved. Sri Lanka.</p>
+      <div class="social-links">
+        <a href="#" title="LinkedIn">Li</a>
+        <a href="#" title="Twitter">Tw</a>
+        <a href="#" title="Instagram">In</a>
+        <a href="#" title="GitHub">Gh</a>
+      </div>
+    </div>
   </div>
 </footer>
 

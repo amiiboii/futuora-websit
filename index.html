@@ -219,8 +219,8 @@
   .project-card:hover .project-img-wrap img { transform: scale(1.04); }
   .project-category-bar { position: absolute; top: 14px; left: 14px; background: rgba(3,30,44,0.85); backdrop-filter: blur(6px); padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
   .project-status { position: absolute; top: 14px; right: 14px; padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .status-dev  { background: rgba(0,200,212,0.18); color: var(--teal); border: 1px solid rgba(0,200,212,0.35); }
-  .status-live { background: rgba(0,200,100,0.18); color: #00d084; border: 1px solid rgba(0,200,100,0.35); }
+  .status-dev  { background: rgba(3,30,44,0.82); color: var(--teal); border: 1px solid rgba(0,200,212,0.4); }
+  .status-live { background: var(--teal); color: var(--dark-bg); border: none; }
   .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
   .project-body h3 { font-size: 1.1rem; font-weight: 800; color: var(--black); margin-bottom: 6px; letter-spacing: -0.02em; }
   .project-tagline { font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 12px; }
@@ -545,12 +545,15 @@
     .container { padding: 0 18px; }
 
     /* hero: show image as overlay on mobile */
-    .hero { min-height: auto; }
-    .hero-bg { display: block; clip-path: none; opacity: 0.18; }
-    .hero-bg::after { background: linear-gradient(to bottom, #f5fbfc 30%, rgba(245,251,252,0.7) 100%); }
+    .hero { min-height: 480px; }
+    .hero-bg { display: block; clip-path: none; opacity: 0.32; }
+    .hero-bg::after { background: linear-gradient(to bottom, #f5fbfc 20%, rgba(245,251,252,0.55) 100%); }
     .hero-content { padding: 52px 18px 44px; }
     .hero-text h1 { font-size: 2rem; }
     .hero-sub { font-size: 1rem; max-width: 100%; }
+
+    /* services heading smaller on mobile so hero stays dominant */
+    .services-header h2 { font-size: 1.35rem; }
 
     /* services */
     .services-grid { grid-template-columns: 1fr; }
@@ -586,6 +589,8 @@
     /* projects */
     .project-body { padding: 18px; }
     .projects-grid { gap: 20px; }
+    .project-category-bar { font-size: 0.6rem; padding: 4px 10px; top: 10px; left: 10px; }
+    .project-status { top: 36px; left: 10px; right: auto; bottom: auto; font-size: 0.6rem; padding: 4px 10px; }
 
 
     /* process */

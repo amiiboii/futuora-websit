@@ -515,8 +515,30 @@
     .hero-bg { clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%); }
     .projects-grid { grid-template-columns: 1fr; }
   }
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; width: 36px; height: 36px; flex-shrink: 0; }
+  .hamburger span { display: block; width: 20px; height: 2px; background: var(--black); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+  .hamburger.open span:first-child { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:last-child { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE NAV DRAWER */
+  .mobile-nav { position: fixed; top: 66px; left: 0; right: 0; background: var(--white); z-index: 199; border-bottom: 1px solid var(--gray-mid); padding: 4px 20px 20px; transform: translateY(-6px); opacity: 0; pointer-events: none; transition: transform 0.18s ease, opacity 0.18s ease; box-shadow: 0 12px 32px rgba(6,51,71,0.1); }
+  .mobile-nav.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+  .mobile-nav a { display: block; padding: 14px 0; font-size: 1rem; font-weight: 600; color: var(--black); border-bottom: 1px solid var(--gray-light); letter-spacing: 0.01em; }
+  .mobile-nav a:last-of-type { border-bottom: none; }
+  .mobile-nav a.active { color: var(--teal); }
+  .mobile-nav .mobile-nav-cta { display: flex; margin-top: 14px; width: 100%; justify-content: center; border-bottom: none; padding: 0; }
+  .mobile-nav .mobile-nav-cta .btn { width: 100%; justify-content: center; font-size: 0.95rem; padding: 13px; }
+  [data-theme="dark"] .mobile-nav { background: #031e2c; border-bottom-color: #0a2a35; }
+  [data-theme="dark"] .mobile-nav a { color: #c8e4ec; border-bottom-color: #0a2a35; }
+  [data-theme="dark"] .hamburger span { background: #c8e4ec; }
+
   @media (max-width: 640px) {
     .nav-links { display: none; }
+    .nav-cta .btn-dark { display: none; }
+    .nav-phone { display: none; }
+    .hamburger { display: flex; }
     .nav-logo-text { font-size: 1rem; }
     .section { padding: 44px 0; }
     .container { padding: 0 18px; }
@@ -591,7 +613,6 @@
   }
   @media (max-width: 400px) {
     .nav-inner { padding: 0 14px; gap: 10px; }
-    .nav-cta .btn-dark { display: none; }
     .nav-logo-text { display: none; }
     .hero-text h1 { font-size: 1.75rem; }
     .awards-circles { gap: 8px; }
@@ -775,9 +796,25 @@
         <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <a href="#contact" class="btn btn-dark" style="padding:11px 22px;font-size:0.85rem;">Get in Touch</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services">Services</a>
+  <a href="#technologies">Technologies</a>
+  <a href="#about">About</a>
+  <a href="#projects">Our Work</a>
+  <a href="#contact">Contact</a>
+  <a href="careers.html">Careers</a>
+  <div class="mobile-nav-cta">
+    <a href="#contact" class="btn btn-teal">Get in Touch</a>
+  </div>
+</div>
 
 <main id="home">
 
@@ -1424,16 +1461,23 @@
   // Contact popup
   const popup = document.getElementById('contactPopup');
   function openPopup(trigger, direction) {
-    const rect = trigger.getBoundingClientRect();
-    const right = window.innerWidth - rect.right;
-    popup.style.right = Math.max(8, right) + 'px';
-    popup.style.left = 'auto';
-    if (direction === 'above') {
-      popup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
-      popup.style.top = 'auto';
-    } else {
-      popup.style.top = (rect.bottom + 10) + 'px';
+    if (window.innerWidth <= 640) {
+      popup.style.left = '12px';
+      popup.style.right = '12px';
+      popup.style.top = '74px';
       popup.style.bottom = 'auto';
+    } else {
+      const rect = trigger.getBoundingClientRect();
+      const right = window.innerWidth - rect.right;
+      popup.style.right = Math.max(8, right) + 'px';
+      popup.style.left = 'auto';
+      if (direction === 'above') {
+        popup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+        popup.style.top = 'auto';
+      } else {
+        popup.style.top = (rect.bottom + 10) + 'px';
+        popup.style.bottom = 'auto';
+      }
     }
     const isOpen = popup.classList.contains('open');
     popup.classList.remove('open');
@@ -1442,6 +1486,30 @@
   document.getElementById('phoneFab').addEventListener('click', (e) => { e.stopPropagation(); openPopup(e.currentTarget, 'above'); });
   document.getElementById('navPhone').addEventListener('click', (e) => { e.stopPropagation(); openPopup(e.currentTarget, 'below'); });
   document.addEventListener('click', (e) => { if (!popup.contains(e.target)) popup.classList.remove('open'); });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !hamburger.contains(e.target)) {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
 
   // Dark mode toggle
   const toggleBtn = document.getElementById('theme-toggle');

@@ -14,28 +14,29 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --teal: #00C8D4; --black: #063347; --dark-bg: #031e2c;
-      --gray-light: #f0f7f8; --gray-mid: #d8e8ec; --gray-text: #4a7080;
-      --white: #ffffff;
+      --gray-light: #f0f7f8; --gray-mid: #cfe6ea; --gray-text: #4a7080;
+      --white: #ffffff; --font: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
     }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+    body { font-family: var(--font); background: var(--white); color: var(--black); line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-    h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
-    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+    h1 { font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; }
     h3 { font-size: 1rem; font-weight: 700; }
 
     /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--gray-mid); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; color: var(--black); letter-spacing: -0.03em; }
-    .nav-logo img { height: 32px; width: auto; }
+    nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0,0,0,0.07); height: 66px; display: flex; align-items: center; transition: box-shadow 0.3s; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-logo span { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--black); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-family: inherit; font-size: 0.88rem; cursor: pointer; transition: all 0.15s; text-decoration: none; border: none; }
-    .btn-teal { background: var(--teal); color: var(--dark-bg); padding: 10px 22px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 6px; font-weight: 700; font-family: var(--font); font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; border: none; letter-spacing: 0.02em; padding: 14px 28px; }
+    .btn-teal { background: var(--teal); color: var(--dark-bg); }
     .btn-teal:hover { background: #00b0bb; }
-    .btn-outline { background: transparent; border: 1.5px solid var(--gray-mid); color: var(--black); padding: 9px 20px; }
-    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-    .theme-toggle { width: 38px; height: 38px; background: var(--gray-light); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--black); flex-shrink: 0; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--black); color: var(--black); }
+    .btn-outline:hover { background: var(--black); color: var(--white); }
+    .theme-toggle { width: 38px; height: 38px; background: var(--gray-light); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--black); flex-shrink: 0; transition: background 0.15s; }
     .theme-toggle:hover { background: var(--gray-mid); }
     .theme-toggle .icon-moon { display: none; }
     [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
@@ -142,10 +143,10 @@
 
     /* DARK MODE */
     [data-theme="dark"] body { background: #031e2c; color: #c8e4ec; }
-    [data-theme="dark"] nav { background: rgba(3,30,44,0.95); border-bottom-color: #0a2a35; }
-    [data-theme="dark"] .nav-logo { color: #c8e4ec; }
-    [data-theme="dark"] .btn-outline { border-color: #0a2a35; color: #c8e4ec; }
-    [data-theme="dark"] .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+    [data-theme="dark"] nav { background: rgba(3,30,44,0.97); border-bottom-color: #0a2a35; }
+    [data-theme="dark"] .nav-logo span { color: #c8e4ec; }
+    [data-theme="dark"] .btn-outline { border-color: #0a3040; color: #c8e4ec; background: transparent; }
+    [data-theme="dark"] .btn-outline:hover { background: #0a3040; color: #c8e4ec; border-color: #0a3040; }
     [data-theme="dark"] .jobs-section { background: #031e2c; }
     [data-theme="dark"] .job-card { background: #031e2c; border-color: #0a2a35; }
     [data-theme="dark"] .job-card:hover { border-color: rgba(0,200,212,0.3); }
@@ -217,12 +218,12 @@
     <p>We build hardware, software and intelligent systems across engineering, sourcing, logistics and operations. If you want to work on products that actually ship, this is the place.</p>
     <div class="hero-stats">
       <div class="hero-stat-item">
-        <div class="hero-stat-num">9</div>
+        <div class="hero-stat-num">3</div>
         <div class="hero-stat-label">Open positions</div>
       </div>
       <div class="hero-stat-item">
-        <div class="hero-stat-num">4</div>
-        <div class="hero-stat-label">Departments</div>
+        <div class="hero-stat-num">1</div>
+        <div class="hero-stat-label">Department</div>
       </div>
       <div class="hero-stat-item">
         <div class="hero-stat-num">Hybrid / Remote</div>
@@ -322,191 +323,6 @@
             <div style="display:flex;align-items:center;gap:10px;">
               <span class="see-role-hint">View Job Description →</span>
               <button class="apply-btn" onclick="event.stopPropagation(); openModal('Electronics and Embedded Systems Engineer')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- SOFTWARE -->
-    <div class="dept-block">
-      <div class="dept-label">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Software
-      </div>
-      <div class="jobs-grid">
-
-        <div class="job-card" onclick="openJD('frontend')">
-          <div class="job-card-top">
-            <div class="job-title">Associate Frontend Developer<br>React / WordPress</div>
-            <div class="job-badges">
-              <span class="badge badge-new">Hiring now</span>
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Build web interfaces for client projects and internal tools. You will work across React apps and WordPress sites, turning designs into responsive, production-ready code.</p>
-          <div class="job-reqs">
-            <span class="job-req">React.js</span>
-            <span class="job-req">WordPress</span>
-            <span class="job-req">HTML / CSS</span>
-            <span class="job-req">Tailwind</span>
-            <span class="job-req">Responsive Design</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Remote · Online
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('Associate Frontend Developer, React / WordPress')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="job-card" onclick="openJD('fullstack')">
-          <div class="job-card-top">
-            <div class="job-title">Full Stack Developer</div>
-            <div class="job-badges">
-              <span class="badge badge-new">Hiring now</span>
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Own features end-to-end across B2C and B2B products. Frontend to backend, database to deployment. We ship fast and you will too.</p>
-          <div class="job-reqs">
-            <span class="job-req">React / Next.js</span>
-            <span class="job-req">Node.js / Python</span>
-            <span class="job-req">REST APIs</span>
-            <span class="job-req">PostgreSQL</span>
-            <span class="job-req">Docker</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Hybrid · Sri Lanka
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('Full Stack Developer')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="job-card" onclick="openJD('ai-auto')">
-          <div class="job-card-top">
-            <div class="job-title">AI and Automation Engineer</div>
-            <div class="job-badges">
-              <span class="badge badge-new">Hiring now</span>
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Build AI agents and automated workflows that replace repetitive work. You will design and deploy agentic systems using n8n, LLM APIs and custom infrastructure for real client pipelines.</p>
-          <div class="job-reqs">
-            <span class="job-req">Python</span>
-            <span class="job-req">n8n</span>
-            <span class="job-req">LLM APIs</span>
-            <span class="job-req">Workflow Automation</span>
-            <span class="job-req">API Integration</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Remote · Online
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('AI and Automation Engineer')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="job-card" onclick="openJD('sw-lead')">
-          <div class="job-card-top">
-            <div class="job-title">Software Development Lead</div>
-            <div class="job-badges">
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Lead our software team across multiple client engagements. Define architecture, set engineering standards, mentor developers and own technical delivery end-to-end.</p>
-          <div class="job-reqs">
-            <span class="job-req">5+ years</span>
-            <span class="job-req">Team Leadership</span>
-            <span class="job-req">System Architecture</span>
-            <span class="job-req">Full Stack</span>
-            <span class="job-req">Client Management</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Hybrid · Sri Lanka
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('Software Development Lead')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- OPERATIONS -->
-    <div class="dept-block">
-      <div class="dept-label">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 7V5a2 2 0 0 0-4 0v2"/></svg>
-        Operations and Admin
-      </div>
-      <div class="jobs-grid">
-
-        <div class="job-card" onclick="openJD('hr')">
-          <div class="job-card-top">
-            <div class="job-title">HR and Talent Associate</div>
-            <div class="job-badges">
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Own hiring and people operations for a growing engineering team. Source candidates, run interviews, manage onboarding and help build a culture people want to be part of.</p>
-          <div class="job-reqs">
-            <span class="job-req">Recruitment</span>
-            <span class="job-req">Onboarding</span>
-            <span class="job-req">People Ops</span>
-            <span class="job-req">Communication</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Hybrid · Sri Lanka
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('HR and Talent Associate')">Apply Now</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="job-card" onclick="openJD('ops')">
-          <div class="job-card-top">
-            <div class="job-title">Operations and Admin Manager</div>
-            <div class="job-badges">
-              <span class="badge badge-type">Full-time</span>
-            </div>
-          </div>
-          <p class="job-desc">Keep the business running smoothly. Coordinate between teams, manage vendors and suppliers, handle admin processes and support leadership with day-to-day operations.</p>
-          <div class="job-reqs">
-            <span class="job-req">Project Coordination</span>
-            <span class="job-req">Vendor Management</span>
-            <span class="job-req">Organisation</span>
-            <span class="job-req">Communication</span>
-          </div>
-          <div class="job-card-footer">
-            <span class="job-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              Hybrid · Sri Lanka
-            </span>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span class="see-role-hint">View Job Description →</span>
-              <button class="apply-btn" onclick="event.stopPropagation(); openModal('Operations and Admin Manager')">Apply Now</button>
             </div>
           </div>
         </div>
@@ -653,150 +469,6 @@
         'Working knowledge of wireless protocols: BLE, LoRa, Wi-Fi, MQTT',
         'Ability to solder, bring up and debug custom PCB hardware',
         'Degree in Electronics, Electrical or Mechatronics Engineering'
-      ],
-      details: { type: 'Full-time', location: 'Hybrid · Sri Lanka', hours: 'Standard business hours' }
-    },
-    'frontend': {
-      title: 'Associate Frontend Developer — React / WordPress',
-      dept: 'Software',
-      applyTitle: 'Associate Frontend Developer, React / WordPress',
-      badges: ['Full-time', 'Remote · Online', 'Entry–Mid Level'],
-      about: 'Build web interfaces for client projects and Futuora internal tools. You will move between React-based web applications and WordPress sites, translating designs into clean, responsive, production-ready code that works across all devices.',
-      projects: [
-        'Building responsive React component libraries and page layouts',
-        'WordPress theme development and plugin customisation for client sites',
-        'Implementing UI from design files (Figma or similar) with pixel accuracy',
-        'Connecting frontend components to REST APIs and backend data',
-        'Performance optimisation and cross-browser compatibility fixes',
-        'Contributing to our internal tooling and dashboard interfaces'
-      ],
-      requirements: [
-        'Solid React.js skills — hooks, state management, component architecture',
-        'WordPress theme and plugin development experience',
-        'Strong HTML5, CSS3 and Tailwind CSS skills',
-        'Responsive and mobile-first design implementation',
-        'Basic REST API integration from the frontend',
-        'Git version control and clean code practices'
-      ],
-      details: { type: 'Full-time', location: 'Remote · Online', hours: 'Flexible working hours' }
-    },
-    'fullstack': {
-      title: 'Full Stack Developer',
-      dept: 'Software',
-      applyTitle: 'Full Stack Developer',
-      badges: ['Full-time', 'Hybrid · Sri Lanka', '2+ Years Experience'],
-      about: 'Own features end-to-end across B2C and B2B software products. You will work across the full stack — frontend interfaces in React or Next.js, backend APIs in Node.js or Python, database design, and deployment. We ship fast and expect the same.',
-      projects: [
-        'Building and maintaining React/Next.js frontend interfaces for client products',
-        'Designing and implementing REST APIs in Node.js or Python (FastAPI/Django)',
-        'PostgreSQL or MySQL database schema design and query optimisation',
-        'Dockerising applications and deploying to cloud infrastructure',
-        'Third-party API integrations (payment gateways, logistics, comms platforms)',
-        'Code review and contributing to engineering best practices across the team'
-      ],
-      requirements: [
-        '2+ years professional full stack development experience',
-        'React.js or Next.js for frontend development',
-        'Node.js and/or Python (FastAPI or Django) for backend development',
-        'PostgreSQL or MySQL — schema design, query writing, migrations',
-        'Docker and basic DevOps/deployment experience',
-        'Git, clean code practices and ability to work in a fast-moving team'
-      ],
-      details: { type: 'Full-time', location: 'Hybrid · Sri Lanka', hours: 'Standard business hours' }
-    },
-    'ai-auto': {
-      title: 'AI and Automation Engineer',
-      dept: 'Software',
-      applyTitle: 'AI and Automation Engineer',
-      badges: ['Full-time', 'Remote · Online', 'AI + Automation'],
-      about: 'Build AI agents and automated workflows that eliminate repetitive work for real clients. You will design, build and deploy agentic systems using n8n, LLM APIs and custom Python infrastructure — solving actual business problems, not toy demos.',
-      projects: [
-        'Designing and building n8n workflow automation pipelines for client operations',
-        'Integrating LLM APIs (OpenAI, Anthropic, Gemini) into production workflows',
-        'Building custom AI agents for document processing, lead handling and data extraction',
-        'RAG (Retrieval-Augmented Generation) systems for knowledge base applications',
-        'API integration across CRMs, ERPs, communication tools and databases',
-        'Monitoring, maintenance and iteration of deployed automation systems'
-      ],
-      requirements: [
-        'Strong Python skills — scripting, API calls, data handling',
-        'Hands-on n8n experience — building and deploying real workflows',
-        'LLM API integration experience (OpenAI, Anthropic, Gemini or similar)',
-        'Understanding of AI agent architecture, RAG and prompt engineering',
-        'REST API integration skills across multiple services and platforms',
-        'Problem-solving mindset focused on practical, reliable automation'
-      ],
-      details: { type: 'Full-time', location: 'Remote · Online', hours: 'Flexible working hours' }
-    },
-    'sw-lead': {
-      title: 'Software Development Lead',
-      dept: 'Software',
-      applyTitle: 'Software Development Lead',
-      badges: ['Full-time', 'Hybrid · Sri Lanka', '5+ Years Experience'],
-      about: 'Lead Futuora\'s software team across multiple concurrent client engagements. You will define architecture, set engineering standards, mentor the team and be the technical point of contact for clients. We need someone who codes, leads and communicates equally well.',
-      projects: [
-        'Defining system architecture for client software projects from kick-off',
-        'Setting and enforcing engineering standards, code review processes and documentation practices',
-        'Mentoring junior and mid-level developers on the team',
-        'Technical communication with clients — requirements gathering, scoping and delivery updates',
-        'Leading hiring and onboarding of new software engineers',
-        'Hands-on development contribution alongside team leadership responsibilities'
-      ],
-      requirements: [
-        '5+ years of professional software development experience, with 1–2 years in a lead or senior role',
-        'Strong full stack background — React, Node.js/Python, PostgreSQL as a minimum',
-        'Experience defining system architecture and making technology decisions',
-        'Demonstrated ability to lead, mentor and grow a development team',
-        'Excellent client-facing communication and project scoping skills',
-        'Ability to balance hands-on development with leadership responsibilities'
-      ],
-      details: { type: 'Full-time', location: 'Hybrid · Sri Lanka', hours: 'Standard business hours' }
-    },
-    'hr': {
-      title: 'HR and Talent Associate',
-      dept: 'Operations and Admin',
-      applyTitle: 'HR and Talent Associate',
-      badges: ['Full-time', 'Hybrid · Sri Lanka', 'People Ops'],
-      about: 'Own hiring and people operations for a fast-growing engineering team. You will work directly with founders, drive the full recruitment cycle for technical and non-technical roles, and build the internal people processes that support the business as it scales.',
-      projects: [
-        'Managing end-to-end recruitment for engineering, software and operations roles',
-        'Sourcing candidates through LinkedIn, job boards and direct outreach',
-        'Coordinating interview processes and candidate communications',
-        'Onboarding new hires — documentation, setup and first-week experience',
-        'Maintaining HR records, contracts and compliance documentation',
-        'Supporting company culture initiatives and internal communications'
-      ],
-      requirements: [
-        'Prior recruitment or HR experience — agency or in-house',
-        'Ability to evaluate technical candidates with guidance from engineering leads',
-        'Strong written and verbal communication skills',
-        'Organised, detail-oriented and able to manage multiple open roles simultaneously',
-        'People-first mindset with genuine interest in building strong teams',
-        'Proficiency with Google Workspace and basic HR or ATS tools'
-      ],
-      details: { type: 'Full-time', location: 'Hybrid · Sri Lanka', hours: 'Standard business hours' }
-    },
-    'ops': {
-      title: 'Operations and Admin Manager',
-      dept: 'Operations and Admin',
-      applyTitle: 'Operations and Admin Manager',
-      badges: ['Full-time', 'Hybrid · Sri Lanka', 'Operations'],
-      about: 'Keep the business running smoothly and free the engineering team to focus on building. You will coordinate across teams, manage vendor and supplier relationships, handle administrative processes and support leadership with day-to-day operational decisions.',
-      projects: [
-        'Coordinating between engineering, software and client-facing teams to unblock work',
-        'Managing vendor and supplier relationships — sourcing, pricing, delivery tracking',
-        'Handling procurement, invoicing, documentation and admin workflows',
-        'Supporting founders with operational planning, scheduling and reporting',
-        'Maintaining project trackers and ensuring deadlines and deliverables are visible',
-        'Identifying operational bottlenecks and driving process improvements'
-      ],
-      requirements: [
-        'Experience in an operations, admin or project coordination role',
-        'Strong organisational skills — you keep multiple balls in the air without dropping them',
-        'Vendor and supplier management experience (hardware or manufacturing context a plus)',
-        'Clear communication — written and spoken, internally and externally',
-        'Comfortable working directly with founders in a fast-paced startup environment',
-        'Proficiency with Google Workspace, spreadsheets and project tracking tools'
       ],
       details: { type: 'Full-time', location: 'Hybrid · Sri Lanka', hours: 'Standard business hours' }
     }
